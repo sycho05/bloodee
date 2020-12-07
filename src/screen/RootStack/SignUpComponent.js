@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {
     View,
     Text,
@@ -6,37 +6,36 @@ import {
     TouchableOpacity,
     SafeAreaView,
     ScrollView,
-    ImageBackground,
-    Dimensions,
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
-export default class EditComponent extends React.Component{
-    
-    
-    render(){
+import {AuthContext} from '../../auth/AuthProvider';
+
+const SignUpComponent = ({navigation}) => {
+
+    const {register} = useContext(AuthContext);
+
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
         return(
+            <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
             <View style={styles.container}>
-                <ScrollView>
-                <Text style={styles.title}>Edit Profil</Text>
+                <Text style={styles.title}>Sign Up</Text>
                 <View style={styles.action}>
-                
-                    <View style={styles.section}>
+                    {/* <View style={styles.section}>
                         <TextInput
-                            placeholder='No Register'
+                            placeholder='Nama Lengkap'
                             style={styles.textInput}>
                             </TextInput>
                     </View>
+                    
                     <View style={styles.section}>
                         <TextInput
-                            placeholder='Nama'
+                            placeholder='Tempat Lahir'
                             style={styles.textInput}>
 
                             </TextInput>
-                    </View>
-                    <View style={styles.section}>
-                        <TextInput 
-                        placeholder='Tempat Lahir'
-                        style={styles.textInput}></TextInput>
                     </View>
                     <View style={styles.section}>
                         <TextInput 
@@ -60,54 +59,66 @@ export default class EditComponent extends React.Component{
                     </View>
                     <View style={styles.section}>
                         <TextInput 
-                        placeholder='Golongan Darah'
+                        placeholder='Golongan Darah dan Rhesus'
                         style={styles.textInput}></TextInput>
-                    </View>
+                    </View> */}
                     <View style={styles.section}>
                         <TextInput 
                         placeholder='Email'
-                        style={styles.textInput}></TextInput>
+                        style={styles.textInput}
+                        onChangeText={(userEmail) => setEmail(userEmail)}
+                        value={email}
+                        ></TextInput>
                     </View>
+                    {/* <View style={styles.section}>
+                        <TextInput 
+                        placeholder='No Handphone'
+                        style={styles.textInput}></TextInput>
+                    </View> */}
                     <View style={styles.section}>
                         <TextInput 
-                        placeholder='No. Hanphone'
-                        style={styles.textInput}></TextInput>
+                        placeholder='Password'
+                        style={styles.textInput} secureTextEntry={true}
+                        onChangeText={(userPassword) => setPassword(userPassword)}
+                        value={password}
+                        ></TextInput>
                     </View>
+                    {/* <View style={styles.section}>
+                        <TextInput 
+                        placeholder='Konfirmasi Password'
+                        style={styles.textInput} secureTextEntry={true} 
+                        ></TextInput>
+                    </View> */}
                 </View>
-                </ScrollView>
-                <View style={{flexDirection:'row', alignItems:'center',justifyContent:'center'}}>
                 <TouchableOpacity 
-                onPress={()=>this.props.navigation.navigate("Profil")}
+                onPress={() => register(email, password)}
                 style={styles.login}> 
-                    <Text style={styles.textLogin}>Submit</Text>
+                    <Text style={styles.textLogin}>Register</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                onPress={()=>this.props.navigation.navigate("Profil")}
-                style={styles.login2}> 
-                    <Text style={styles.textLogin}>Kembali</Text>
+                    onPress={() => navigation.navigate("LoginScreen")}>
+                    <Text style={styles.signUp}>Already have an account?</Text>
                 </TouchableOpacity>
             </View>
-            </View>
-
+            </ScrollView>
+    </SafeAreaView>
         )
-    }
 }
-const {width, height} = Dimensions.get('screen');
-const width_button = width * 0.45;
-const width_button2 = width * 0.95
+
+export default SignUpComponent;
+
 var styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'white',
         justifyContent:'center',
-        paddingHorizontal:20,
+        paddingHorizontal:30,
         paddingVertical:100
     },
     title:{
         color: '#8a0303',
         fontWeight :'bold',
         fontSize:30,
-        textAlign:'center'
     },
     section: {
         flexDirection:'row',
@@ -133,28 +144,19 @@ var styles = StyleSheet.create({
         fontWeight:'bold'
     },
     login:{
-        width:'30%',
+        width:'100%',
         height:40,
         backgroundColor:'#8a0303',
         justifyContent:'center',
         alignItems:'center',
         marginTop:25,
         borderRadius:50,
-    },
-    login2:{
-        width:'30%',
-        height:40,
-        backgroundColor:'#8a0303',
-        justifyContent:'center',
-        alignItems:'center',
-        marginTop:25,
-        borderRadius:50,
-        marginLeft:10
     },
     signUp:{
         textAlign:'center',
         marginTop:15,
         color:'grey'
-    },
+    }
+    
 
 });

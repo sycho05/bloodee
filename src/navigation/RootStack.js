@@ -2,9 +2,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import LoginComponent from'../screen/LoginComponent';
-import SignUpComponent from'../screen/SignUpComponent';
-import SwiperComponent from'../screen/SwiperComponent';
+import LoginComponent from'../screen/RootStack/LoginComponent';
+import SignUpComponent from'../screen/RootStack/SignUpComponent';
+import SwiperComponent from'../screen/RootStack/SwiperComponent';
 
 const Stack = createStackNavigator();
 

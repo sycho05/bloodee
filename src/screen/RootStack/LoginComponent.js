@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     TextInput, 
 } from 'react-native';
-import {AuthContext} from '../auth/AuthProvider';
+import {AuthContext} from '../../auth/AuthProvider';
 
 const LoginComponent = ({navigation}) => {
 

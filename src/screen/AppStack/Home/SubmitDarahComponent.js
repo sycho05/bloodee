@@ -14,7 +14,7 @@ export default class SubmitDarahComponent extends React.Component{
         <View style={styles.slide}>
         <View style={styles.header}>
         <Image
-            source={require('../asset/bloodee1.png')}
+            source={require('../../../asset/bloodee1.png')}
             style={styles.image2}
         />
         <Text style={styles.title}>Terimakasih. Data yang anda isi akan divalidasi terlebih dahulu oleh pihak yang berwenang. Data yang tervalidasi akan diberitahu lewat nomor handphone, terimakasih.</Text>

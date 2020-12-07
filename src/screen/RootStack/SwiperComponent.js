@@ -15,7 +15,7 @@ export default class SwiperComponent extends React.Component{
         <View style={styles.slide}>
         <View style={styles.header}>
         <Image
-            source={require('../asset/bloodee1.png')}
+            source={require('../../asset/bloodee1.png')}
             style={styles.image}
             resizeMode={"stretch"}
         />
@@ -28,7 +28,7 @@ export default class SwiperComponent extends React.Component{
         <View style={styles.slide}>
         <View style={styles.header}>
         <Image
-            source={require('../asset/bloodee1.png')}
+            source={require('../../asset/bloodee1.png')}
             style={styles.image}
             resizeMode={"stretch"}
         />
@@ -41,7 +41,7 @@ export default class SwiperComponent extends React.Component{
         <View style={styles.slide}>
         <View style={styles.header}>
         <Image
-            source={require('../asset/bloodee1.png')}
+            source={require('../../asset/bloodee1.png')}
             style={styles.image2}
             resizeMode={"stretch"}
         />

@@ -13,7 +13,7 @@ import {
     SafeAreaView,
 } from 'react-native';
 
-export default class MyVoucherComponent extends React.Component{
+export default class QrScreen extends React.Component{
     constructor(){
         super();
         this.state={
@@ -37,23 +37,25 @@ export default class MyVoucherComponent extends React.Component{
             <View style={styles.container}>
                 <View style={styles.header}>
                     <ImageBackground
-                    source={require('../asset/bloodee1.png')}
+                    source={require('../../../asset/bloodee1.png')}
                     style={styles.imageBackground}
                     >
                         
                     </ImageBackground>
                 </View>
-            <View style={{backgroundColor:'#efefef', padding:5,flex:15, marginTop:40}}>
-                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>Voucher Saya</Text>
-                <View style={{textAlign:'center', alignItems:'center', marginTop:20}}> 
-                        <Text style={{ fontSize: 15, fontWeight:'bold'}}>Vocuher Belanja Lajadut</Text>
-                        <Text></Text>
-                        <Text style={{textAlign:'center'}}>Tukarkan voucher belanja lajadut sebesar Rp.10.000 dengan syarat pembelian sebesar Rp.2.000.000.  </Text>
-                        <Text style={{fontWeight:'bold'}}>Kode Voucher: ABCDEFGHIJKLMN</Text>
-                        <Text></Text>
-                        <Text>Batas Penukaran Voucher: 29 February 2021 </Text>
+                <View>
+                <Text style={{marginTop:60,fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>Tunjukkan Qr Code Pada Admin PMI</Text>
+                </View>
+            <View style={{backgroundColor:'#efefef', padding:1,flex:20, marginTop:40}}>
+                
+                    <View style={{padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>
+                    <ImageBackground
+                    source={{uri: 'https://miro.medium.com/max/1424/1*sHmqYIYMV_C3TUhucHrT4w.png'}}
+                    style={styles.imageBackground2}
+                    >
+                        
+                    </ImageBackground>
                     </View>
-                    
                 </View>
             </View>
 
@@ -91,8 +93,8 @@ var styles = StyleSheet.create({
         alignItems:'center'
     },
     imageBackground2:{
-        width: width*0.25,
-        height: width*0.25,
+        width: width*0.7,
+        height: width*0.7,
         alignItems:'center',
         justifyContent:'center'
     },

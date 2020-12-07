@@ -13,7 +13,7 @@ import {
     SafeAreaView,
 } from 'react-native';
 
-export default class Location extends React.Component{
+export default class InfoComponent extends React.Component{
     constructor(){
         super();
         this.state={
@@ -37,38 +37,31 @@ export default class Location extends React.Component{
             <View style={styles.container}>
                 <View style={styles.header}>
                     <ImageBackground
-                    source={require('../asset/bloodee1.png')}
+                    source={require('../../../asset/bloodee1.png')}
                     style={styles.imageBackground}
                     >
                         
                     </ImageBackground>
                 </View>
             <View style={{backgroundColor:'#efefef', padding:5,flex:15, marginTop:40}}>
-                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>Lokasi Donor Darah</Text>
+                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>Info Terkini Seputar Donor Darah</Text>
                 <FlatList
                 data={this.state.data}
                 keyExtractor={(item,index)=> index.toString()}
                 renderItem={({item})=>
                     <View style={{padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column'}}>
-                        <Text>Panggil Map Disini</Text>
+                        <Text>Dibutuhkan darah Golongan AB+ sebanyak 5 kantong untuk pasien bernama X
+                            untuk menjalani operasi besar di wilayah X. Harap pendonor golongan AB+ dimohon untuk ke RS X
+                        </Text>
+                        <Text>Info Pendoronoran: </Text>
                         <Text></Text>
+                        <Text>Alamat : Jl. Setia Budi 1, RS X  </Text>
+                        <Text>Tanggal : 32 Maret 2020 </Text>
+                        <Text>Jam : 99:99 </Text>
                     </View>
                     }/>
+                    
                 </View>
-            <View style={{backgroundColor:'#efefef', padding:5,flex:15, marginTop:40}}>
-                <Text style={{fontSize:20,fontWeight:'bold', textAlign:"center"}}>Data Lokasi Donor Darah</Text>
-                <FlatList
-                data={this.state.data}
-                keyExtractor={(item,index)=> index.toString()}
-                renderItem={({item})=>
-                    <View style={{padding:20, margin:1, backgroundColor:'#fff', flexDirection:'column'}}>
-                        <Text>Nama Lokasi : IT TELKOM PURWOKERTO</Text>
-                        <Text>Alamat : Jl. Di Panjaitan No.128</Text>
-                        <Text>Tanggal : 30 February 2020</Text>
-                        <Text>Jam : 99:99-Selesai</Text>
-                    </View>
-                    }/>
-            </View>
             </View>
 
                 

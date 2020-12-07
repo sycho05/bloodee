@@ -13,7 +13,7 @@ import {
     SafeAreaView,
 } from 'react-native';
 
-export default class QrScreen extends React.Component{
+export default class HistoryScreen extends React.Component{
     constructor(){
         super();
         this.state={
@@ -37,25 +37,25 @@ export default class QrScreen extends React.Component{
             <View style={styles.container}>
                 <View style={styles.header}>
                     <ImageBackground
-                    source={require('../asset/bloodee1.png')}
+                    source={require('../../../asset/bloodee1.png')}
                     style={styles.imageBackground}
                     >
                         
                     </ImageBackground>
                 </View>
-                <View>
-                <Text style={{marginTop:60,fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>Tunjukkan Qr Code Pada Admin PMI</Text>
-                </View>
-            <View style={{backgroundColor:'#efefef', padding:1,flex:20, marginTop:40}}>
-                
-                    <View style={{padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>
-                    <ImageBackground
-                    source={{uri: 'https://miro.medium.com/max/1424/1*sHmqYIYMV_C3TUhucHrT4w.png'}}
-                    style={styles.imageBackground2}
-                    >
-                        
-                    </ImageBackground>
+            <View style={{backgroundColor:'#efefef', padding:5,flex:15, marginTop:40}}>
+                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>History Pendonoran Darah</Text>
+                <FlatList
+                data={this.state.data}
+                keyExtractor={(item,index)=> index.toString()}
+                renderItem={({item})=>
+                    <View style={{padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column'}}>
+                        <Text>Nama Lokasi : IT TELKOM PURWOKERTO</Text>
+                        <Text>Alamat : Jl. DI Panjaitan No. 128 </Text>
+                        <Text>Tanggal : 30 February 2020 </Text>
+                        <Text>Jam : 99:99 </Text>
                     </View>
+                    }/>
                 </View>
             </View>
 
@@ -93,8 +93,8 @@ var styles = StyleSheet.create({
         alignItems:'center'
     },
     imageBackground2:{
-        width: width*0.7,
-        height: width*0.7,
+        width: width*0.25,
+        height: width*0.25,
         alignItems:'center',
         justifyContent:'center'
     },

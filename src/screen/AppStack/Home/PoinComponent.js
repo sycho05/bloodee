@@ -9,96 +9,86 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-export default class Home extends React.Component{
+export default class PoinComponent extends React.Component{
     render(){
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <ImageBackground
-                    source={require('../asset/bloodee1.png')}
-                    style={styles.imageBackground}
+                </View>
+                <View style={styles.footer2}>
+            <View style={{flexDirection:"row", marginTop:15, marginTop:70}}>
+                <TouchableOpacity>
+                    <ImageBackground 
+                    source={require('../../../asset/coin2.png')}
+                    style={styles.imageBackground2}
                     >
                     </ImageBackground>
-                </View>
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.title}>Poin Saya: 200000 </Text>
             <View style={styles.footer2}>
+            <Text style={{marginTop:10, fontWeight:'bold', fontSize:15}}>Voucher yang dapat ditukar     </Text>
             <View style={{flexDirection:"row",marginTop: 40}}>
                 <TouchableOpacity
-                onPress={()=>this.props.navigation.navigate("Permintaan")}
+                onPress={()=>this.props.navigation.navigate("Voucher1")}
                 style={[styles.button,{
                     borderColor:'#8a0303',
                     borderWidth:1,
                     borderRadius:15,
                     marginTop:15
                 }]}>
-                    <ImageBackground 
-                    source={require('../asset/bloodee2.png')}
-                    style={styles.imageBackground2}
-                    >
-                    </ImageBackground>
+                    <Text style={{fontWeight:'bold', fontSize:20}}>Voucher</Text>
+                    <Text style={{textAlign:'center'}}>Potongan Belanja Senilai Rp. 10.000</Text>
+                    <Text style={{marginTop:20}}>Poin Penukaran: 1000</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                 onPress={()=>this.props.navigation.navigate("Info")}
                 style={[styles.button,{
-                    backgroundColor:'#8a0303',
+                    borderColor:'#8a0303',
                     borderRadius:15,
+                    borderWidth:1,
                     marginTop:15,
                     marginLeft:20
                 }]}>
-                    <ImageBackground 
-                    source={require('../asset/news1.png')}
-                    style={styles.imageBackground2}
-                    >
-                    </ImageBackground>
+                    <Text style={{fontWeight:'bold', fontSize:20}}>Voucher</Text>
+                    <Text style={{textAlign:'center'}}>Potongan Belanja Senilai Rp. 20.000</Text>
+                    <Text style={{marginTop:20}}>Poin Penukaran: 2000</Text>
                 </TouchableOpacity>
     
             </View>
             <View style={styles.footer2}>
             <View style={{flexDirection:"row", marginTop:15}}>
                 <TouchableOpacity
-                onPress={()=>this.props.navigation.navigate("Poin")}
+                onPress={()=>this.props.navigation.navigate("SignUpScreen")}
                 style={[styles.button,{
                     borderColor:'#8a0303',
                     borderWidth:1,
                     borderRadius:15,
                     marginTop:15
                 }]}>
-                    <ImageBackground 
-                    source={require('../asset/coin1.png')}
-                    style={styles.imageBackground2}
-                    >
-                    </ImageBackground>
+                    <Text style={{fontWeight:'bold', fontSize:20}}>Voucher</Text>
+                    <Text style={{textAlign:'center'}}>Potongan Belanja Senilai Rp. 30.000</Text>
+                    <Text style={{marginTop:20}}>Poin Penukaran: 3000</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                onPress={()=>this.props.navigation.navigate("VoucherSaya")}
+                onPress={()=>this.props.navigation.navigate("LoginScreen")}
                 style={[styles.button,{
-                    backgroundColor:'#8a0303',
+                    borderColor:'#8a0303',
                     borderRadius:15,
+                    borderWidth:1,
                     marginTop:15,
                     marginLeft:20
                 }]}>
-                    <ImageBackground 
-                    source={require('../asset/voucher1.png')}
-                    style={styles.imageBackground2}
-                    >
-                    </ImageBackground>
+                    <Text style={{fontWeight:'bold', fontSize:20}}>Voucher</Text>
+                    <Text style={{textAlign:'center'}}>Potongan Belanja Senilai Rp. 40.000</Text>
+                    <Text style={{marginTop:20}}>Poin Penukaran: 4000</Text>
                 </TouchableOpacity>
-    
             </View>
-            <View style={styles.footer2}>
-            <View style={{flexDirection:"row", marginTop:15}}>
-                <TouchableOpacity
-                onPress={()=>this.props.navigation.navigate("Kartu")}
-                style={[styles.button2,{
-                    borderColor:'#8a0303',
-                    borderWidth:1,
-                    borderRadius:15,
-                    marginTop:15
-                }]}>
-                    <ImageBackground 
-                    source={require('../asset/kartu.png')}
-                    style={styles.imageBackground2}
-                    >
-                    </ImageBackground>
+            <View >
+            <TouchableOpacity 
+                onPress={()=>this.props.navigation.navigate("Home")}
+                style={styles.login}> 
+                    <Text style={styles.textLogin}>Kembali</Text>
                 </TouchableOpacity>
             </View>
             </View>    
@@ -167,6 +157,20 @@ export default class Home extends React.Component{
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    },
+    login:{
+        width:80,
+        height:40,
+        backgroundColor:'#8a0303',
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop:25,
+        borderRadius:50,
+    },
+    textLogin:{
+        color:'white',
+        fontSize:15,
+        fontWeight:'bold'
     },
 })
     
