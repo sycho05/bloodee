@@ -24,6 +24,7 @@ const LocationComponent = () => {
       jarakITTP: null,
       jarakPMI: null,
       jarakRSUD: null,
+      jarakUNSOED: null,
   });
 
   const [currentPosition, setCurrentPosition] = useState({
@@ -56,8 +57,9 @@ const LocationComponent = () => {
     },
     {
       id: "4",
-      title: "IT Telkom Purwokerto",
-      deskripsi : "Donor Sekarang !",
+      title: "RSGMP UNSOED",
+      deskripsi : "Donor Pukul 08:00 - 12:00 !",
+      jarak: datajarak.jarakUNSOED,
     },
     {
       id: "5",
@@ -111,7 +113,13 @@ const LocationComponent = () => {
                       latitude: -7.417449,
                       longitude: 109.231547,
               });
-              }    
+              } else if(item.id == 4){
+                  setCurrentPosition({
+                      ...currentPosition,
+                      latitude: -7.410808,
+                      longitude: 109.253850,
+                });
+              }   
           }}
           style={{ backgroundColor }}
       />
@@ -138,8 +146,13 @@ const LocationComponent = () => {
             latitude: -7.417449,
             longitude: 109.231547,
           })
-          setJarak({jarakITTP:jarakITTP, jarakPMI:jarakPMI, jarakRSUD:jarakRSUD});              
-          console.log(jarakITTP,jarakPMI,jarakRSUD);
+          const jarakUNSOED = getDistance(position.coords, {
+            latitude: -7.410808,
+            longitude: 109.253850,
+          })
+
+          setJarak({jarakITTP:jarakITTP, jarakPMI:jarakPMI, jarakRSUD:jarakRSUD, jarakUNSOED:jarakUNSOED});              
+          console.log(datajarak);
       });
   }, []);
 
@@ -204,6 +217,26 @@ const LocationComponent = () => {
                     <View>
                         <View style={styles.map_bubble}>
                           <Text style={styles.map_title}>RSUD MARGONO SOEKARJO</Text>
+                          <Text style={styles.map_description}>Donor Disini !</Text>
+                        </View>
+                        <View style={styles.map_arrowBorder} />
+                        <View style={styles.map_arrow} />
+                    </View>  
+                  </Callout>
+                </Marker>
+
+                <Marker
+                    coordinate={{
+                        latitude: -7.410808,
+                        longitude: 109.253850,
+                    }}
+                    title='RSGMP UNSOED'
+                    description='Testtigngiwnifanwidn'
+                >
+                  <Callout tooltip>
+                    <View>
+                        <View style={styles.map_bubble}>
+                          <Text style={styles.map_title}>RSGMP UNSOED</Text>
                           <Text style={styles.map_description}>Donor Disini !</Text>
                         </View>
                         <View style={styles.map_arrowBorder} />
