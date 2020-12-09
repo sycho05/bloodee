@@ -13,12 +13,11 @@ import {
 } from 'react-native';
 import {AuthContext} from '../../../auth/AuthProvider';
 import database from '@react-native-firebase/database';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PermintaanComponent = ({navigation}) => {
 
     const {user} = useContext(AuthContext);
-    const [permintaan, setPermintaan] = useState(1);
+    const [permintaan, setPermintaan] = useState();
     const [namaPeminta, setNamaPeminta] = useState();
     const [namaPenerima, setNamaPenerima] = useState();
     const [golonganDarah, setGolonganDarah] = useState();
@@ -28,7 +27,7 @@ const PermintaanComponent = ({navigation}) => {
 
     const Post = () => {
         console.log('REF :', permintaan);
-        database().ref(`/PermintaanDarah/${user.uid}/Permintaan_${permintaan}`).update({
+        database().ref(`PermintaanDarah/Permintaan_${user.uid}_${permintaan}`).update({
             Id: user.uid,
             NamaPeminta: namaPeminta,
             NamaPenerima: namaPenerima,
@@ -39,55 +38,45 @@ const PermintaanComponent = ({navigation}) => {
         }).then(() => {
             ToastAndroid.show('Submit Data Berhasil !', ToastAndroid.SHORT);
         });
-
-        // database()
-        // .ref(`/PermintaanDarah/${user.uid}`)
-        // .on('value', datadb => {
-        //     console.log('User data: ', datadb.val());
-        //   });
         
       }
 
-      const storeData = async () => {
+      const storeData = () => {
         try {
-          const data = permintaan.toString()
-          await AsyncStorage.setItem(`${user.id}`, data)
-          console.log('STORE DATA :',data);
-          console.log('ISI DATA PERMINTAAN :',permintaan);
+
+            database().ref(`/counter/users/${user.uid}`).update({
+                key: permintaan,
+            });
+            console.log('key counter store firebase sukses');
         } catch (e) {
-          // saving error
+          console.log(e);
         }
       }
-
-      const removeItem = async () => {
-        try {
-            await AsyncStorage.removeItem(`${user.id}`);
-            return true;
-        }
-        catch(exception) {
-            return false;
-        }
-      }
-
-      
     
-      const getData = async () => {
+      const getData = () => {
         try {
-        const data = await AsyncStorage.getItem(`${user.id}`)
-        if(data !== null) {
-            const convert = parseInt(data)
-            console.log('GET DATA :',convert);
-            setPermintaan(convert);
-            console.log('PERMINTAAN',permintaan);
-            
-        }
+            database()
+            .ref(`/counter/users/${user.uid}`)
+            .on('value', datadb => {
+
+                if(datadb.val() !== null) {
+                    const data = datadb.val().key;
+                    setPermintaan(data+1);
+                    console.log('key counter get firebase sukses');
+                    
+                }else{
+                    setPermintaan(1);
+                    console.log('key counter get firebase kosong');
+                }
+            });
+        
         } catch(e) {
-        // error reading value
+            console.log(e);
+            setPermintaan(1);
         }
     }
 
     useEffect(() => {
-        //removeItem()
         getData();
     }, [])
   
@@ -154,7 +143,7 @@ const PermintaanComponent = ({navigation}) => {
             </View>
             <View style={{flexDirection:'row',flex:2,justifyContent:'center', alignItems:'center'}}>
             <TouchableOpacity 
-            onPress={()=> {Post();setPermintaan(permintaan+1);storeData();} } //navigation.navigate("Submit");
+            onPress={()=> {Post();setPermintaan(permintaan+1);storeData();navigation.navigate('Submit')} } //navigation.navigate("Submit");
             style={styles.login}> 
                 <Text style={styles.textLogin}>Submit</Text>
             </TouchableOpacity>
