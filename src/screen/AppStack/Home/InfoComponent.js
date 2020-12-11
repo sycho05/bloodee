@@ -49,6 +49,35 @@ const InfoComponent = () => {
         }
 
     }, []);
+    
+    useEffect(() => {
+      const onValueChange = database()
+        .ref(`/PermintaanDarah/`)
+        .on('value', snapshot => {
+          const dataTemp = []
+              snapshot.forEach(item => {
+                dataTemp.push({ data : {
+                  id: item.key,
+                  Id: item.val().Id,
+                  NamaPeminta: item.val().NamaPeminta,
+                  NamaPenerima: item.val().NamaPenerima,
+                  GolonganDarah: item.val().GolonganDarah,
+                  JumlahDarah: item.val().JumlahDarah,
+                  KeteranganLain: item.val().KeteranganLain,
+                  NoHandphone: item.val().NoHandphone
+                }      
+                });
+                return false;
+              });
+              //console.log('Data Permintaan :',dataTemp);
+              setDataPermintaan(dataTemp);
+        });
+  
+      return () =>
+        database()
+          .ref(`/PermintaanDarah/`)
+          .off('value', onValueChange);
+    }, [dataPermintaan]);
 
     const Item = ({ item, onPress, style }) => (
       <TouchableOpacity onPress={onPress} style={[styles.item, style]}>

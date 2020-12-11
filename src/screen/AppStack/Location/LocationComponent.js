@@ -126,34 +126,38 @@ const LocationComponent = () => {
       );
   };
 
-  useEffect(() => {
+  const GetPosition = () => {
       Geolocation.getCurrentPosition(position => {
-          const {longitude,latitude} = position.coords;
-          setCurrentPosition({
-              ...currentPosition,
-              latitude,
-              longitude
-          });
-          const jarakITTP = getDistance(position.coords, {
-            latitude: -7.434923,
-            longitude: 109.251937,
-          })
-          const jarakPMI = getDistance(position.coords, {
-            latitude: -7.423615,
-            longitude: 109.239141,
-          })
-          const jarakRSUD = getDistance(position.coords, {
-            latitude: -7.417449,
-            longitude: 109.231547,
-          })
-          const jarakUNSOED = getDistance(position.coords, {
-            latitude: -7.410808,
-            longitude: 109.253850,
-          })
+        const {longitude,latitude} = position.coords;
+        setCurrentPosition({
+            ...currentPosition,
+            latitude,
+            longitude
+        });
+        const jarakITTP = getDistance(position.coords, {
+          latitude: -7.434923,
+          longitude: 109.251937,
+        })
+        const jarakPMI = getDistance(position.coords, {
+          latitude: -7.423615,
+          longitude: 109.239141,
+        })
+        const jarakRSUD = getDistance(position.coords, {
+          latitude: -7.417449,
+          longitude: 109.231547,
+        })
+        const jarakUNSOED = getDistance(position.coords, {
+          latitude: -7.410808,
+          longitude: 109.253850,
+        })
 
-          setJarak({jarakITTP:jarakITTP, jarakPMI:jarakPMI, jarakRSUD:jarakRSUD, jarakUNSOED:jarakUNSOED});              
-          console.log(datajarak);
-      });
+        setJarak({jarakITTP:jarakITTP, jarakPMI:jarakPMI, jarakRSUD:jarakRSUD, jarakUNSOED:jarakUNSOED});              
+        console.log(datajarak);
+    });
+  }
+
+  useEffect(() => {
+      GetPosition();
   }, []);
 
     return currentPosition ? (
@@ -247,9 +251,18 @@ const LocationComponent = () => {
 
             </MapView>
             </View>
-            <View style={{backgroundColor:'#fff', paddingHorizontal:15, marginTop: 10, borderRadius:20, elevation:2, padding:10, marginHorizontal:50}}>
-                <Text style={{textAlign:'center', fontSize:20, fontWeight:'700'}}>Donor Terdekat !</Text>
+            <View style={{flexDirection:'row', alignContent:'center', justifyContent:'space-around'}}>
+              <View style={{backgroundColor:'#fff', paddingHorizontal:15, marginTop: 10, borderRadius:20, elevation:2, padding:10}}>
+                  <Text style={{textAlign:'center', fontSize:20, fontWeight:'700'}}>Donor Terdekat !</Text>
+              </View>
+              <TouchableOpacity 
+              style={{justifyContent:'center',alignContent:'center',backgroundColor:'#fff', paddingHorizontal:15, marginTop: 10, borderRadius:20, elevation:2, padding:10}}
+              onPress={() => GetPosition()}
+              >
+                  <Text>P</Text>
+              </TouchableOpacity>
             </View>
+              
 
             <View style={styles.containerlist}>
                 <FlatList
