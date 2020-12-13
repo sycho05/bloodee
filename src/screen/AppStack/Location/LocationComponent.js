@@ -259,7 +259,7 @@ const LocationComponent = () => {
               style={{justifyContent:'center',alignContent:'center',backgroundColor:'#fff', paddingHorizontal:15, marginTop: 10, borderRadius:20, elevation:2, padding:10}}
               onPress={() => GetPosition()}
               >
-                  <Text>P</Text>
+                  <Text style={{fontWeight:'700', fontSize:20}}>Lokasi Saya</Text>
               </TouchableOpacity>
             </View>
               

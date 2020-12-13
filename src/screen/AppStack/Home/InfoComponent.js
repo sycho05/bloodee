@@ -13,6 +13,7 @@ import {
     SafeAreaView,
 } from 'react-native';
 import database from '@react-native-firebase/database';
+import { TextInput } from 'react-native-gesture-handler';
 
 const InfoComponent = () => {
     const [selectedId, setSelectedId] = useState(null);
@@ -72,7 +73,6 @@ const InfoComponent = () => {
               //console.log('Data Permintaan :',dataTemp);
               setDataPermintaan(dataTemp);
         });
-  
       return () =>
         database()
           .ref(`/PermintaanDarah/`)
@@ -80,15 +80,14 @@ const InfoComponent = () => {
     }, [dataPermintaan]);
 
     const Item = ({ item, onPress, style }) => (
+      
       <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-        <Text style={styles.deskripsi}>{item.data.id}</Text>
-        <Text style={styles.deskripsi}>{item.data.Id}</Text>
-        <Text style={styles.deskripsi}>{item.data.NamaPeminta}</Text>
-        <Text style={styles.deskripsi}>{item.data.NamaPenerima}</Text>
-        <Text style={styles.deskripsi}>{item.data.GolonganDarah}</Text>
-        <Text style={styles.deskripsi}>{item.data.JumlahDarah}</Text>
-        <Text style={styles.deskripsi}>{item.data.KeteranganLain}</Text>
-        <Text style={styles.deskripsi}>{item.data.NoHandphone}</Text>
+        <Text style={styles.deskripsi}>Peminta Darah :{item.data.NamaPeminta}</Text>
+        <Text style={styles.deskripsi}>Penerima Darah :{item.data.NamaPenerima}</Text>
+        <Text style={styles.deskripsi}>Golongan Darah Dibutuhkan :{item.data.GolonganDarah}</Text>
+        <Text style={styles.deskripsi}>Kantong Darah Dibutuhkan :{item.data.JumlahDarah}</Text>
+        <Text style={styles.deskripsi}>Keterangan Lain : {item.data.KeteranganLain}</Text>
+        <Text style={styles.deskripsi}>Alamat:</Text>
       </TouchableOpacity>
     );
     
@@ -116,6 +115,7 @@ const InfoComponent = () => {
             </View>
         <View style={{backgroundColor:'#efefef', padding:5,flex:15, marginTop:40}}>
             <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>Info Terkini Seputar Donor Darah</Text>
+            <TextInput placeholder="Cari" style={{textAlign:'center'}}></TextInput>
             <FlatList
                 data={dataPermintaan}
                 renderItem={renderItem}
@@ -130,6 +130,7 @@ const InfoComponent = () => {
             
     )
 }
+
 
 export default InfoComponent;
 
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
         color:'#000'
       },
       deskripsi: {
-          fontSize:10,
+          fontSize:15,
       },
       title: {
         fontSize:20,

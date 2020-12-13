@@ -75,7 +75,7 @@ return(
                                 style={styles.imageBackground4}> 
                             </ImageBackground>
                         </ImageBackground>
-                        <View style={{flexDirection:'column', marginRight:120}}>
+                        <View style={{flexDirection:'column', marginRight:0}}>
                             <Text style={{marginTop:10, flexDirection:'column'}}>No. ID : {dataUser.Id}</Text>
                             <Text>Nama : {dataUser.Nama}</Text>
                             <Text>Tempat Lahir : {dataUser.TempatLahir}</Text>
