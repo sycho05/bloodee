@@ -86,6 +86,14 @@ const PermintaanComponent = ({navigation}) => {
 
             <Text style={styles.title}>Buat Permintaan Darah</Text>
             <View style={styles.action}>
+            <View style={styles.section}>
+                    <TextInput 
+                    placeholder='No KTP'
+                    style={styles.textInput}
+                    >
+
+                    </TextInput>
+                </View>
                 <View style={styles.section}>
                     <TextInput
                         placeholder='Nama Peminta Darah'
@@ -136,6 +144,14 @@ const PermintaanComponent = ({navigation}) => {
                     placeholder='No. Hp Yang Dapat Dihubungi'
                     style={styles.textInput}
                     onChangeText={(input) => setNoHandphone(input)}
+                    >
+
+                    </TextInput>
+                </View>
+                <View style={styles.section}>
+                    <TextInput 
+                    placeholder='Alamat'
+                    style={styles.textInput}
                     >
 
                     </TextInput>
@@ -206,7 +222,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#8a0303',
         justifyContent:'center',
         alignItems:'center',
-        marginTop:25,
+        marginTop:50,
         borderRadius:50,
     },
     login2:{
@@ -215,7 +231,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#8a0303',
         justifyContent:'center',
         alignItems:'center',
-        marginTop:25,
+        marginTop:50,
         borderRadius:50,
         marginLeft:10
     },
