@@ -18,42 +18,10 @@ import { TextInput } from 'react-native-gesture-handler';
 const InfoComponent = () => {
     const [selectedId, setSelectedId] = useState(null);
     const [dataPermintaan, setDataPermintaan] = useState([]);
-
-      useEffect(() => {
-        try{
-            database()
-            .ref(`/PermintaanDarah/`)
-            .once('value').then((snapshot) => {
-              const dataTemp = []
-
-              snapshot.forEach(item => {
-                dataTemp.push({ data : {
-                  id: item.key,
-                  Id: item.val().Id,
-                  NamaPeminta: item.val().NamaPeminta,
-                  NamaPenerima: item.val().NamaPenerima,
-                  GolonganDarah: item.val().GolonganDarah,
-                  JumlahDarah: item.val().JumlahDarah,
-                  KeteranganLain: item.val().KeteranganLain,
-                  NoHandphone: item.val().NoHandphone
-                }      
-                });
-                return false;
-              });
-              console.log(dataTemp);
-              setDataPermintaan(dataTemp);
-
-            });
-
-        }catch(e){
-            alert(e);
-        }
-
-    }, []);
     
     useEffect(() => {
       const onValueChange = database()
-        .ref(`/PermintaanDarah/`)
+        .ref(`/PermintaanDarahAccepted/`)
         .on('value', snapshot => {
           const dataTemp = []
               snapshot.forEach(item => {
@@ -75,9 +43,9 @@ const InfoComponent = () => {
         });
       return () =>
         database()
-          .ref(`/PermintaanDarah/`)
+          .ref(`/PermintaanDarahAccepted/`)
           .off('value', onValueChange);
-    }, [dataPermintaan]);
+    }, []);
 
     const Item = ({ item, onPress, style }) => (
       

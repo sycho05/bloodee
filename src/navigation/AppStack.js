@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import HomeComponent from '../screen/AppStack/Home/HomeComponent';
 import InfoComponent from '../screen/AppStack/Home/InfoComponent';
-import KartuComponent from '../screen/AppStack/Home/KartuComponent';
 import PermintaanComponent from '../screen/AppStack/Home/PermintaanComponent';
 import PoinComponent from '../screen/AppStack/Home/PoinComponent';
 import SubmitDarahComponent from '../screen/AppStack/Home/SubmitDarahComponent';
@@ -49,7 +48,6 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="Poin"  component={PoinComponent} options={{headerShown: false}} />
     <HomeStack.Screen name="Voucher1"  component={Voucher1Component} options={{headerShown: false}} />
     <HomeStack.Screen name="VoucherSaya"  component={MyVoucherComponent} options={{headerShown: true}} />
-    <HomeStack.Screen name="Kartu"  component={KartuComponent} options={{headerShown: true}} />
     <HomeStack.Screen name="Lokasi Donor"  component={LocationComponent} options={{headerShown: true}} />
     <HomeStack.Screen name="History"  component={HistoryComponent} options={{headerShown: true}} />
   </HomeStack.Navigator>
@@ -66,7 +64,7 @@ const ProfilStackScreen = () => (
 const AppTabs = createBottomTabNavigator();
 const AppTabsScreen = () => (
   <AppTabs.Navigator>
-        <AppTabs.Screen name="Home" component={HomeStackScreen}options={{
+        <AppTabs.Screen name="Home" component={HomeStackScreen} options={{
             title: "Home",
             tabBarIcon: (props) => (
             <IconBottom data={props} image={require('../asset/navbarhome.png')} />

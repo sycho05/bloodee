@@ -4,17 +4,13 @@ import {
     Text,
     StyleSheet,
     ImageBackground,
-    ImageBackgroundBase,
     Dimensions,
     TouchableOpacity,
     FlatList,
     Button,
-    ScrollView,
-    SafeAreaView,
 } from 'react-native';
 import {AuthContext} from '../../../auth/AuthProvider';
 import database from '@react-native-firebase/database';
-import { TextInput } from 'react-native-gesture-handler';
 
 const HistoryComponent = () => {
     const {user} = useContext(AuthContext);
@@ -30,11 +26,8 @@ const HistoryComponent = () => {
                 dataTemp.push({ data : {
                     id: item.key,
                     Id: item.val().Id,
-                    Donor: item.val().Donor,
-                    GolonganDarah: item.val().GolonganDarah,
-                    JumlahDarah: item.val().JumlahDarah,
-                    KeteranganLain: item.val().KeteranganLain,
-                    Lokasi: item.val().Lokasi
+                    Tanggal: item.val().Donor,
+                    Lokasi: item.val().GolonganDarah,
                 }      
                 });
                 return false;
@@ -46,16 +39,13 @@ const HistoryComponent = () => {
         database()
           .ref(`/History/${user.uid}`)
           .off('value', onValueChange);
-    }, [dataHistory]);
+    }, []);
 
     const Item = ({ item, onPress, style }) => (
       
       <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-        <Text style={styles.deskripsi}>Peminta Darah :{item.data.Donor}</Text>
-        <Text style={styles.deskripsi}>Golongan Darah Dibutuhkan :{item.data.GolonganDarah}</Text>
-        <Text style={styles.deskripsi}>Kantong Darah Dibutuhkan :{item.data.JumlahDarah}</Text>
-        <Text style={styles.deskripsi}>Keterangan Lain : {item.data.KeteranganLain}</Text>
-        <Text style={styles.deskripsi}>Alamat:</Text>
+        <Text style={styles.deskripsi}>Tanggal Donor :{item.data.Tanggal}</Text>
+        <Text style={styles.deskripsi}>Lokasi :{item.data.Lokasi}</Text>
       </TouchableOpacity>
     );
     
@@ -90,11 +80,7 @@ const HistoryComponent = () => {
             />     
             </View>
         </View>
-
-            
-            
-            
-            
+         
     )
 }
 

@@ -31,7 +31,7 @@ const EditComponent = ({navigation}) => {
     const Post = () => {
         database().ref(`/users/${user.uid}`).update({
             Id: user.uid,
-            KTP: dataKTP,
+            NoKTP: dataKTP,
             Nama: dataNama,
             TempatLahir: dataTempatLahir,
             TanggalLahir: dataTanggalLahir,
@@ -43,27 +43,19 @@ const EditComponent = ({navigation}) => {
         }).then(() => {
             ToastAndroid.show('Submit Data Berhasil !', ToastAndroid.SHORT);
         });
-
-        database()
-        .ref(`/users/${user.uid}`)
-        .on('value', datadb => {
-            console.log('User data: ', datadb.val());
-          });
-        
       }
 
     return(
         <View style={styles.container}>
-            <ScrollView>
+            <View style={{margin:25, justifyContent:'center', alignContent:'center'}}>
+            <ScrollView>  
             <Text style={styles.title}>Edit Profil</Text>
-            <View style={styles.action}>
-            
                 <View style={styles.section}>
                     <TextInput
                         placeholder='No KTP'
                         style={styles.textInput}
                         onChangeText={(input) =>setDataKTP(input)}
-                        value={dataKTP}>
+                        >
                         </TextInput>
                 </View> 
                 <View style={styles.section}>
@@ -71,7 +63,6 @@ const EditComponent = ({navigation}) => {
                         placeholder='Nama'
                         style={styles.textInput}
                         onChangeText={(input) => setDataNama(input)}
-                        value={dataNama}
                         >
 
                         </TextInput>
@@ -81,7 +72,6 @@ const EditComponent = ({navigation}) => {
                     placeholder='Tempat Lahir'
                     style={styles.textInput}
                     onChangeText={(input) => setDataTempatLahir(input)}
-                    value={dataTempatLahir}
                     ></TextInput>
                 </View>
                 <View style={styles.section}>
@@ -89,7 +79,6 @@ const EditComponent = ({navigation}) => {
                     placeholder='Tanggal Lahir'
                     style={styles.textInput}
                     onChangeText={(input) => setDataTanggalLahir(input)}
-                    value={dataTanggalLahir}
                     ></TextInput>
                 </View>
                 <View style={styles.section}>
@@ -97,7 +86,6 @@ const EditComponent = ({navigation}) => {
                     placeholder='Alamat'
                     style={styles.textInput}
                     onChangeText={(input) => setDataAlamat(input)}
-                    value={dataAlamat}
                     ></TextInput>
                 </View>
                 <View style={styles.section}>
@@ -113,7 +101,6 @@ const EditComponent = ({navigation}) => {
                     placeholder='Jenis Kelamin'
                     style={styles.textInput}
                     onChangeText={(input) => setDataJenisKelamin(input)}
-                    value={dataJenisKelamin}
                     ></TextInput>
                 </View>
                 <View style={styles.section}>
@@ -121,7 +108,6 @@ const EditComponent = ({navigation}) => {
                     placeholder='Golongan Darah'
                     style={styles.textInput}
                     onChangeText={(input) => setDataGolonganDarah(input)}
-                    value={dataGolonganDarah}
                     ></TextInput>
                 </View>
                 <View style={styles.section}>
@@ -129,23 +115,39 @@ const EditComponent = ({navigation}) => {
                     placeholder='No. Hanphone'
                     style={styles.textInput}
                     onChangeText={(input) => setDataNoHandphone(input)}
-                    value={dataNoHandphone}
                     ></TextInput>
                 </View>
+        
+            <View style={{flexDirection:"row",justifyContent:'center', alignItems:'center', marginBottom:10, marginHorizontal:20}}>
+                <TouchableOpacity
+                    onPress={()=> { Post(); navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Profil' }],
+                    });}}
+                    style={[styles.button,{
+                        borderColor:'#8a0303',
+                        borderWidth:1,
+                        borderRadius:15,
+                        marginTop:15
+                    }]}>
+                    <Text style={{color:'#8a0303',fontWeight:'bold'}}>Submit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=> {navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Profil' }],
+                    });}}
+                    style={[styles.button,{ 
+                        backgroundColor:'#8a0303', 
+                        borderRadius:15,
+                        marginTop:15,
+                        marginLeft:15
+                    }]}>
+                        <Text style={{color:'white',fontWeight:'bold'}}>Kembali</Text>
+                </TouchableOpacity>
             </View>
             </ScrollView>
-            <View style={{flexDirection:'row', alignItems:'center',justifyContent:'center'}}>
-            <TouchableOpacity 
-            onPress={()=> { Post(); navigation.navigate("Profil");}}
-            style={styles.login}> 
-                <Text style={styles.textLogin}>Submit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-            onPress={()=> navigation.navigate("Profil")}
-            style={styles.login2}> 
-                <Text style={styles.textLogin}>Kembali</Text>
-            </TouchableOpacity>
-        </View>
+            </View>
         </View>
 
     )
@@ -154,15 +156,13 @@ const EditComponent = ({navigation}) => {
  export default EditComponent;
 
 const {width, height} = Dimensions.get('screen');
-const width_button = width * 0.45;
-const width_button2 = width * 0.95
+const width_button = width * 0.2;
 var styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'white',
         justifyContent:'center',
-        paddingHorizontal:20,
-        paddingVertical:100
+        alignContent:'center',
     },
     title:{
         color: '#8a0303',
@@ -183,39 +183,11 @@ var styles = StyleSheet.create({
         flex:0,
         paddingLeft:10
     },
-    forgot:{
-        textAlign:'right',
-        marginTop:15,
-        color:'#8a0303'
-    },
-    textLogin:{
-        color:'white',
-        fontSize:15,
-        fontWeight:'bold'
-    },
-    login:{
-        width:'30%',
+    button: {
+        width:width_button,
         height:40,
-        backgroundColor:'#8a0303',
         justifyContent:'center',
-        alignItems:'center',
-        marginTop:25,
-        borderRadius:50,
-    },
-    login2:{
-        width:'30%',
-        height:40,
-        backgroundColor:'#8a0303',
-        justifyContent:'center',
-        alignItems:'center',
-        marginTop:25,
-        borderRadius:50,
-        marginLeft:10
-    },
-    signUp:{
-        textAlign:'center',
-        marginTop:15,
-        color:'grey'
+        alignItems:'center'
     },
 
 });

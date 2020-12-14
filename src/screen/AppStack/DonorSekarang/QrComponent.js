@@ -22,7 +22,7 @@ const QrScreen = ({navigation}) => {
 
     const PopUpAlert = () =>{
         Alert.alert(
-            "Alert",
+            "AlertQR",
             "Mohon Lengkapi Data Diri terlebih dahulu sebelum dapat mengakses menu lainnya",
             [
                 {
@@ -39,53 +39,27 @@ const QrScreen = ({navigation}) => {
     }
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            try{
-                database()
-                .ref(`/users/${user.uid}`)
-                .on('value', datadb => {
-                    console.log('User : ', datadb.val());
-
-                    if(datadb.val() === null){
-                        database().ref(`/users/${user.uid}`).set({
-                            Id: user.uid,
-                            Nama: '',
-                            TempatLahir: '',
-                            TanggalLahir: '',
-                            Alamat: '',
-                            Wilayah: '',
-                            JenisKelamin: '',
-                            GolonganDarah: '',
-                            NoHandphone: '',
-                        });
-                        console.log('User AKTIF');
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'Profil' }],
-                          });
-                        PopUpAlert();
-                    }else{
-                        console.log('APAKAH INI DIJALANIN ??')
-
-                        if(datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
-                            console.log('NAMA NULL KESINI', datadb.val());
-                            PopUpAlert();
-                            navigation.reset({
-                                index: 0,
-                                routes: [{ name: 'Profil' }],
-                              });
-                        }
-                    }
-     
-                });
-            }catch(e){
-                console.log(e);
-                alert('Ada Error Database');
+        const onValueChange = database()
+          .ref(`/users/${user.uid}`)
+          .on('value', datadb => {
+            console.log('User data: ', datadb.val());
+            console.log('APAKAH INI DIJALANIN ??')
+            if(datadb.val().NoKTP === ''|| datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
+                console.log('NAMA NULL KESINI', datadb.val());
+                PopUpAlert();
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Profil' }],
+                    });
             }
-        });
+          });
     
-        return unsubscribe;
-        }, [navigation]);
+        // Stop listening for updates when no longer required
+        return () =>
+          database()
+            .ref(`/users/${user.uid}`)
+            .off('value', onValueChange);
+      }, []);
 
     return(
         <View style={styles.container}>
@@ -102,7 +76,7 @@ const QrScreen = ({navigation}) => {
             </View>
             <View style={{backgroundColor:'#efefef', padding:1,flex:20, marginTop:40}}>
             
-                <View style={{padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>
+                <View style={{flex:1,padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>
                 <QRCode
                     value={user.uid}
                     size={250}

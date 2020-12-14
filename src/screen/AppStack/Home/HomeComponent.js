@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {AuthContext} from '../../../auth/AuthProvider';
 import database from '@react-native-firebase/database';
+import QRCode from 'react-native-qrcode-svg';
 
 const HomeComponent = ({navigation}) => {
 
@@ -31,11 +32,6 @@ const HomeComponent = ({navigation}) => {
             "Alert",
             "Mohon Lengkapi Data Diri terlebih dahulu sebelum dapat mengakses menu lainnya",
             [
-                {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
                 { 
                     text: "OK", onPress: () => console.log("OK Pressed") 
                 }
@@ -45,90 +41,88 @@ const HomeComponent = ({navigation}) => {
     }
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            try{
-                database()
-                .ref(`/users/${user.uid}`)
-                .on('value', datadb => {
-                    console.log('User : ', datadb.val());
-
-                    if(datadb.val() === null){
-                        database().ref(`/users/${user.uid}`).set({
-                            Id: user.uid,
-                            NoKTP: '',
-                            Nama: '',
-                            TempatLahir: '',
-                            TanggalLahir: '',
-                            Alamat: '',
-                            Wilayah: '',
-                            JenisKelamin: '',
-                            GolonganDarah: '',
-                            NoHandphone: '',
-                        });
-                        console.log('User AKTIF');
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'Profil' }],
-                          });
-                        PopUpAlert();
-                    }else{
-                        console.log('APAKAH INI DIJALANIN ??')
-                        setDataUser(datadb.val());
-
-                        if(datadb.val().NoKTP === ''||datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
-                            console.log('NAMA NULL KESINI', datadb.val());
-                            PopUpAlert();
-                            navigation.reset({
-                                index: 0,
-                                routes: [{ name: 'Profil' }],
-                              });
-                        }
-                    }
-     
+        const onValueChange = database()
+          .ref(`/users/${user.uid}`)
+          .on('value', datadb => {
+            console.log('User data: ', datadb.val());
+            if(datadb.val() === null){
+                database().ref(`/users/${user.uid}`).set({
+                    Id: user.uid,
+                    NoKTP: '',
+                    Nama: '',
+                    TempatLahir: '',
+                    TanggalLahir: '',
+                    Alamat: '',
+                    Wilayah: '',
+                    JenisKelamin: '',
+                    GolonganDarah: '',
+                    NoHandphone: '',
                 });
-            }catch(e){
-                console.log(e);
-                alert('Ada Error Database');
+                console.log('User AKTIF');
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Profil' }],
+                  });
+                PopUpAlert();
+            }else{
+                console.log('APAKAH INI DIJALANIN ??')
+                setDataUser(datadb.val());
+
+                if(datadb.val().NoKTP === ''|| datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
+                    console.log('NAMA NULL KESINI', datadb.val());
+                    PopUpAlert();
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Profil' }],
+                      });
+                }
             }
-        });
+          });
     
-        return unsubscribe;
-        }, [navigation]);
+        // Stop listening for updates when no longer required
+        return () =>
+          database()
+            .ref(`/users/${user.uid}`)
+            .off('value', onValueChange);
+      }, []);
 
-        return (
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <ImageBackground
-                    source={require('../../../asset/kartu3.png')}
-                    style={styles.imageBackground3}
-                    >
-                    <View>
-                    <Text style={{fontSize:20, textAlign:'center',marginTop:100}}>Kartu Donor Darah</Text>
-                    <Text style={{fontSize:20, textAlign:'center', textDecorationLine:'underline'}}>Bloodee APP</Text>
-                    <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center'}}>
-                        <ImageBackground
-                            source={{uri: 'https://miro.medium.com/max/1424/1*sHmqYIYMV_C3TUhucHrT4w.png'}}
-                            style={styles.imageBackground4}> 
-                        <Text style={{marginTop:100, fontSize:40, fontWeight:'bold', marginLeft:30}}>{dataUser.GolonganDarah}</Text>
-                        </ImageBackground>
-                        <View style={{flexDirection:'column', marginRight:0}}>
-                        <Text style={{marginTop:10, flexDirection:'column'}}>No. ID : {dataUser.Id}</Text>
-                            <Text>No KTP : 1234567891011{dataUser.NoKTP}</Text>
-                            <Text>Nama : {dataUser.Nama}</Text>
-                            <Text>Jenis Kelamin : {dataUser.JenisKelamin}</Text>
-                            <Text>Tempat Lahir : {dataUser.TempatLahir}</Text>
-                            <Text>Tanggal Lahir : {dataUser.TanggalLahir}</Text>
-                            <Text>Alamat : {dataUser.Alamat}</Text>
-                            <Text>Wilayah : {dataUser.Wilayah}</Text>
-                            <Text>No. Telp : {dataUser.NoHandphone}</Text>
-
-
-                        </View>
+return (
+<View style={styles.container}>
+        <View style={styles.header}>
+            <ImageBackground
+                source={require('../../../asset/kartu3.png')}
+                resizeMode='contain'
+                imageStyle={{borderRadius:50}}
+                style={styles.imageBackground3}
+            >
+            <View>
+                <Text style={{fontSize:20, textAlign:'center', marginTop:60}}>Kartu Donor Darah</Text>
+                <Text style={{fontSize:20, textAlign:'center', textDecorationLine:'underline'}}>Bloodee APP</Text>
+                <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center'}}>
+                    <View style={{flexDirection:'column', justifyContent:'center', alignContent:'center', margin:20}}>
+                    <QRCode
+                        value={user.uid}
+                        size={100}
+                    />
+                    <Text style={{fontSize:40, fontWeight:'bold', textAlign:'center'}}>{dataUser.GolonganDarah}</Text>
+                    </View>
+                    <View style={{flexDirection:'column'}}>
+                        <Text style={{marginTop:10, flexDirection:'column', width:200}} numberOfLines={1}>No. ID : {dataUser.Id}</Text>
+                        <Text>No KTP :{dataUser.NoKTP}</Text>
+                        <Text>Nama : {dataUser.Nama}</Text>
+                        <Text>Jenis Kelamin : {dataUser.JenisKelamin}</Text>
+                        <Text>Tempat Lahir : {dataUser.TempatLahir}</Text>
+                        <Text>Tanggal Lahir : {dataUser.TanggalLahir}</Text>
+                        <Text>Alamat : {dataUser.Alamat}</Text>
+                        <Text>Wilayah : {dataUser.Wilayah}</Text>
+                        <Text>No. Telp : {dataUser.NoHandphone}</Text>
                     </View>
                 </View>
+            </View>
             </ImageBackground>
-                </View>
-            <View style={styles.footer2}>
+        </View>
+
+    <View style={styles.footer2}>
             <View style={{flexDirection:"row",marginTop: 0}}>
                 <TouchableOpacity
                 onPress={()=>navigation.navigate("Permintaan")}
@@ -136,7 +130,7 @@ const HomeComponent = ({navigation}) => {
                     borderColor:'#8a0303',
                     borderWidth:1,
                     borderRadius:15,
-                    marginTop:15
+                    marginTop:15,
                 }]}>
                     <ImageBackground 
                     source={require('../../../asset/bloodee2.png')}
@@ -159,10 +153,9 @@ const HomeComponent = ({navigation}) => {
                     >
                     </ImageBackground>
                 </TouchableOpacity>
-    
+
             </View>
-            <View style={styles.footer2}>
-            <View style={{flexDirection:"row", marginTop:15}}>
+            <View style={{flexDirection:"row", marginVertical:15}}>
                 <TouchableOpacity
                 onPress={()=>navigation.navigate("Lokasi Donor")}
                 style={[styles.button,{
@@ -192,8 +185,7 @@ const HomeComponent = ({navigation}) => {
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
-            <View style={styles.footer2}>
-            <View style={{flexDirection:"row", marginTop:15}}>
+            <View style={{flexDirection:"row", marginBottom:15}}>
                 <TouchableOpacity
                 onPress={()=>navigation.navigate("Poin")}
                 style={[styles.button,{
@@ -222,15 +214,12 @@ const HomeComponent = ({navigation}) => {
                     >
                     </ImageBackground>
                 </TouchableOpacity>
-    
-            </View>
             </View>   
-            </View>    
-            </View> 
-            </View>
-            
-        );
-    }
+    </View> 
+</View>
+        
+    );
+}
 
     export default HomeComponent;
 
@@ -250,17 +239,20 @@ const HomeComponent = ({navigation}) => {
     alignItems: 'center',
     },
     header: {
-    marginTop:50
-    },
-    footer:{
-    flex:1,
-    alignItems:'center',
-    paddingHorizontal:20,
+    justifyContent:'center',
+    alignContent:'center',
+    margin:20,
+    backgroundColor:'#fff',
+    elevation:3,
+    borderRadius:50,
     },
     footer2:{
     flex:1,
     alignItems:'center',
     paddingHorizontal:20,
+    backgroundColor:'#fff',
+    justifyContent:'center',
+    alignContent:'center',
     },
     title: {
     fontSize:25,
@@ -293,12 +285,13 @@ const HomeComponent = ({navigation}) => {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    elevation:5
     },
     imageBackground3:{
-        width: width*1.03,
-        height: width*0.70,
+        width: width*0.95,
+        height: width*0.8,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
     },
     imageBackground4:{
         width: 100,
