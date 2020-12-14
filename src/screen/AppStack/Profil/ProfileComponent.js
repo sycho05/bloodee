@@ -31,20 +31,6 @@ const ProfileComponent = ({navigation}) => {
     });
 
     useEffect(() => {
-        try{
-            database()
-            .ref(`/users/${user.uid}`)
-            .on('value', datadb => {
-                setDataUser(datadb.val());
-                console.log('User : ', datadb.val());
-                });
-
-        }catch(e){
-            alert('Terdapat Error Database');
-        }
-    }, []);
-
-    useEffect(() => {
         const onValueChange = database()
         .ref(`/users/${user.uid}`)
         .on('value', snapshot => {

@@ -35,8 +35,6 @@ const KartuComponent = ({navigation}) =>{
             .on('value', datadb => {
                 console.log('User : ', datadb.val());
                 setDataUser(datadb.val());
-                // if(datadb.val())
-                // setDataUser(datadb.val());
                 
                 });
 

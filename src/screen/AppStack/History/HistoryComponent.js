@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
     View,
     Text,
@@ -12,64 +12,129 @@ import {
     ScrollView,
     SafeAreaView,
 } from 'react-native';
+import {AuthContext} from '../../../auth/AuthProvider';
+import database from '@react-native-firebase/database';
+import { TextInput } from 'react-native-gesture-handler';
 
-export default class HistoryScreen extends React.Component{
-    constructor(){
-        super();
-        this.state={
-            data:[1,2,3,4]
-        }
-
-    }
+const HistoryComponent = () => {
+    const {user} = useContext(AuthContext);
+    const [selectedId, setSelectedId] = useState(null);
+    const [dataHistory, setDataHistory] = useState([]);
     
-    getData= async()=>{
-        const response = await fetch('https://jsonplaceholder.typicode.com/users')
-        const data = await response.json()
-        this.setState({
-            data:data
-        })
-    }
-    componentDidMount(){
-        this.getData()
-    }
-    render(){
-        return(
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <ImageBackground
-                    source={require('../../../asset/bloodee1.png')}
-                    style={styles.imageBackground}
-                    >
-                        
-                    </ImageBackground>
-                </View>
-            <View style={{backgroundColor:'#efefef', padding:5,flex:15, marginTop:40}}>
-                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>History Pendonoran Darah</Text>
-                <FlatList
-                data={this.state.data}
-                keyExtractor={(item,index)=> index.toString()}
-                renderItem={({item})=>
-                    <View style={{padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column'}}>
-                        <Text>Nama Lokasi : IT TELKOM PURWOKERTO</Text>
-                        <Text>Alamat : Jl. DI Panjaitan No. 128 </Text>
-                        <Text>Tanggal : 30 February 2020 </Text>
-                        <Text>Jam : 99:99 </Text>
-                    </View>
-                    }/>
-                </View>
-            </View>
+    useEffect(() => {
+      const onValueChange = database()
+        .ref(`/History/${user.uid}`)
+        .on('value', snapshot => {
+          const dataTemp = []
+              snapshot.forEach(item => {
+                dataTemp.push({ data : {
+                    id: item.key,
+                    Id: item.val().Id,
+                    Donor: item.val().Donor,
+                    GolonganDarah: item.val().GolonganDarah,
+                    JumlahDarah: item.val().JumlahDarah,
+                    KeteranganLain: item.val().KeteranganLain,
+                    Lokasi: item.val().Lokasi
+                }      
+                });
+                return false;
+              });
+              //console.log('Data Permintaan :',dataTemp);
+              setDataHistory(dataTemp);
+        });
+      return () =>
+        database()
+          .ref(`/History/${user.uid}`)
+          .off('value', onValueChange);
+    }, [dataHistory]);
 
-                
-                
-                
-                
-        )
-        }
+    const Item = ({ item, onPress, style }) => (
+      
+      <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+        <Text style={styles.deskripsi}>Peminta Darah :{item.data.Donor}</Text>
+        <Text style={styles.deskripsi}>Golongan Darah Dibutuhkan :{item.data.GolonganDarah}</Text>
+        <Text style={styles.deskripsi}>Kantong Darah Dibutuhkan :{item.data.JumlahDarah}</Text>
+        <Text style={styles.deskripsi}>Keterangan Lain : {item.data.KeteranganLain}</Text>
+        <Text style={styles.deskripsi}>Alamat:</Text>
+      </TouchableOpacity>
+    );
+    
+    const renderItem = ({ item }) => {
+      const backgroundColor = item.id === selectedId ? "#f2f2f2" : "#fff";
+  
+      return (
+        <Item
+          item={item}
+          onPress={() => setSelectedId(item.id)}
+          style={{ backgroundColor }}
+        />
+      );
+    };
+
+    return(
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <ImageBackground
+                source={require('../../../asset/bloodee1.png')}
+                style={styles.imageBackground}
+                >
+                    
+                </ImageBackground>
+            </View>
+        <View style={{backgroundColor:'#efefef', padding:5,flex:15, marginTop:40}}>
+            <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>History Donor Darah</Text>
+            <FlatList
+                data={dataHistory}
+                renderItem={renderItem}
+                keyExtractor={item => item.data.id}
+            />     
+            </View>
+        </View>
+
+            
+            
+            
+            
+    )
 }
+
+
+export default HistoryComponent;
 
 const width = Dimensions.get('screen').width
 const width_button = width * 0.2;
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
+
+    containerlist: {
+        flex:1,
+        marginTop: 5,
+        backgroundColor:'#fafafa',
+        borderRadius:5,
+        paddingTop:2,
+        elevation:2
+      },
+      item: {
+        padding: 10,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderRadius:20,
+        elevation:2,
+      },
+      transaksi: {
+        fontSize: 15,
+        color:'#000'
+      },
+      deskripsi: {
+          fontSize:15,
+      },
+      title: {
+        fontSize:20,
+        color:'white',
+        fontWeight:'bold',
+        marginBottom:10
+      },
+
+
     container:{
         flex:1,
         backgroundColor:'white',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,61 +11,114 @@ import {
     Button,
     ScrollView,
     SafeAreaView,
+    Alert
 } from 'react-native';
+import {AuthContext} from '../../../auth/AuthProvider';
+import database from '@react-native-firebase/database';
+import QRCode from 'react-native-qrcode-svg';
 
-export default class QrScreen extends React.Component{
-    constructor(){
-        super();
-        this.state={
-            data:[1,2,3,4]
-        }
+const QrScreen = ({navigation}) => {
+    const {user} = useContext(AuthContext);
 
+    const PopUpAlert = () =>{
+        Alert.alert(
+            "Alert",
+            "Mohon Lengkapi Data Diri terlebih dahulu sebelum dapat mengakses menu lainnya",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { 
+                    text: "OK", onPress: () => console.log("OK Pressed") 
+                }
+            ],
+            { cancelable: false }
+        );
     }
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            try{
+                database()
+                .ref(`/users/${user.uid}`)
+                .on('value', datadb => {
+                    console.log('User : ', datadb.val());
+
+                    if(datadb.val() === null){
+                        database().ref(`/users/${user.uid}`).set({
+                            Id: user.uid,
+                            Nama: '',
+                            TempatLahir: '',
+                            TanggalLahir: '',
+                            Alamat: '',
+                            Wilayah: '',
+                            JenisKelamin: '',
+                            GolonganDarah: '',
+                            NoHandphone: '',
+                        });
+                        console.log('User AKTIF');
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Profil' }],
+                          });
+                        PopUpAlert();
+                    }else{
+                        console.log('APAKAH INI DIJALANIN ??')
+
+                        if(datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
+                            console.log('NAMA NULL KESINI', datadb.val());
+                            PopUpAlert();
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'Profil' }],
+                              });
+                        }
+                    }
+     
+                });
+            }catch(e){
+                console.log(e);
+                alert('Ada Error Database');
+            }
+        });
     
-    getData= async()=>{
-        const response = await fetch('https://jsonplaceholder.typicode.com/users')
-        const data = await response.json()
-        this.setState({
-            data:data
-        })
-    }
-    componentDidMount(){
-        this.getData()
-    }
-    render(){
-        return(
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <ImageBackground
-                    source={require('../../../asset/bloodee1.png')}
-                    style={styles.imageBackground}
-                    >
-                        
-                    </ImageBackground>
-                </View>
-                <View>
-                <Text style={{marginTop:60,fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>Tunjukkan Qr Code Pada Admin PMI</Text>
-                </View>
+        return unsubscribe;
+        }, [navigation]);
+
+    return(
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <ImageBackground
+                source={require('../../../asset/bloodee1.png')}
+                style={styles.imageBackground}
+                >
+                    
+                </ImageBackground>
+            </View>
+            <View>
+            <Text style={{marginTop:60,fontSize:20, color:'black', fontWeight:'bold', textAlign:'center'}}>Tunjukkan Qr Code Pada Admin PMI</Text>
+            </View>
             <View style={{backgroundColor:'#efefef', padding:1,flex:20, marginTop:40}}>
-                
-                    <View style={{padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>
-                    <ImageBackground
-                    source={{uri: 'https://miro.medium.com/max/1424/1*sHmqYIYMV_C3TUhucHrT4w.png'}}
-                    style={styles.imageBackground2}
-                    >
-                        
-                    </ImageBackground>
-                    </View>
+            
+                <View style={{padding:20, margin:0, backgroundColor:'#fff', flexDirection:'column',alignItems:'center', justifyContent:'center'}}>
+                <QRCode
+                    value={user.uid}
+                    size={250}
+                />
                 </View>
             </View>
+        </View>
 
-                
-                
-                
-                
-        )
-        }
+            
+            
+            
+            
+    );
 }
+
+export default QrScreen;
 
 const width = Dimensions.get('screen').width
 const width_button = width * 0.2;

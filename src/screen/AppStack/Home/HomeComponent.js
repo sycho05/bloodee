@@ -6,7 +6,8 @@ import {
     ImageBackground,
     Image,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert,
 } from 'react-native';
 import {AuthContext} from '../../../auth/AuthProvider';
 import database from '@react-native-firebase/database';
@@ -14,7 +15,7 @@ import database from '@react-native-firebase/database';
 const HomeComponent = ({navigation}) => {
 
     const {user} = useContext(AuthContext);
-    const [data2, setData2] = useState({
+    const [dataUser, setDataUser] = useState({
         Id:null,
         Nama:null,
         TempatLahir:null,
@@ -24,24 +25,73 @@ const HomeComponent = ({navigation}) => {
         NoHandphone:null,
     });
 
-        useEffect(() => {
+    const PopUpAlert = () =>{
+        Alert.alert(
+            "Alert",
+            "Mohon Lengkapi Data Diri terlebih dahulu sebelum dapat mengakses menu lainnya",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { 
+                    text: "OK", onPress: () => console.log("OK Pressed") 
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
             try{
                 database()
                 .ref(`/users/${user.uid}`)
                 .on('value', datadb => {
                     console.log('User : ', datadb.val());
+
                     if(datadb.val() === null){
                         database().ref(`/users/${user.uid}`).set({
                             Id: user.uid,
+                            Nama: '',
+                            TempatLahir: '',
+                            TanggalLahir: '',
+                            Alamat: '',
+                            Wilayah: '',
+                            JenisKelamin: '',
+                            GolonganDarah: '',
+                            NoHandphone: '',
                         });
                         console.log('User AKTIF');
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Profil' }],
+                          });
+                        PopUpAlert();
+                    }else{
+                        console.log('APAKAH INI DIJALANIN ??')
+                        setDataUser(datadb.val());
+
+                        if(datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
+                            console.log('NAMA NULL KESINI', datadb.val());
+                            PopUpAlert();
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'Profil' }],
+                              });
+                        }
                     }
+     
                 });
             }catch(e){
+                console.log(e);
                 alert('Ada Error Database');
             }
-        }, []);
-
+        });
+    
+        return unsubscribe;
+        }, [navigation]);
 
         return (
             <View style={styles.container}>
@@ -63,14 +113,14 @@ const HomeComponent = ({navigation}) => {
                             </ImageBackground>
                         </ImageBackground>
                         <View style={{flexDirection:'column', marginRight:0}}>
-                        <Text style={{marginTop:10, flexDirection:'column'}}>No. ID : {data2.Id}</Text>
-                            <Text>Nama : {data2.Nama}</Text>
-                            <Text>Tempat Lahir : {data2.TempatLahir}</Text>
-                            <Text>Tanggal Lahir : {data2.TanggalLahir}</Text>
-                            <Text>Alamat : {data2.Alamat}</Text>
-                            <Text>Wilayah : {data2.Wilayah}</Text>
-                            <Text>No. Telp : {data2.NoHandphone}</Text>
-                            <Text>Jenis Kelamin : {data2.JenisKelamin}</Text>
+                        <Text style={{marginTop:10, flexDirection:'column'}}>No. ID : {dataUser.Id}</Text>
+                            <Text>Nama : {dataUser.Nama}</Text>
+                            <Text>Tempat Lahir : {dataUser.TempatLahir}</Text>
+                            <Text>Tanggal Lahir : {dataUser.TanggalLahir}</Text>
+                            <Text>Alamat : {dataUser.Alamat}</Text>
+                            <Text>Wilayah : {dataUser.Wilayah}</Text>
+                            <Text>No. Telp : {dataUser.NoHandphone}</Text>
+                            <Text>Jenis Kelamin : {dataUser.JenisKelamin}</Text>
                         </View>
                     </View>
                 </View>
