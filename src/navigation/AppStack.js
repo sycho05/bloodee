@@ -50,6 +50,8 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="Voucher1"  component={Voucher1Component} options={{headerShown: false}} />
     <HomeStack.Screen name="VoucherSaya"  component={MyVoucherComponent} options={{headerShown: true}} />
     <HomeStack.Screen name="Kartu"  component={KartuComponent} options={{headerShown: true}} />
+    <HomeStack.Screen name="Lokasi Donor"  component={LocationComponent} options={{headerShown: true}} />
+    <HomeStack.Screen name="History"  component={HistoryComponent} options={{headerShown: true}} />
   </HomeStack.Navigator>
 );
 
@@ -70,22 +72,10 @@ const AppTabsScreen = () => (
             <IconBottom data={props} image={require('../asset/navbarhome.png')} />
             )
         }} />
-        <AppTabs.Screen name="History" component={HistoryComponent}options={{
-            title: "History",
-            tabBarIcon: (props) => (
-            <IconBottom data={props} image={require('../asset/history.png')} />
-            )
-        }} />
         <AppTabs.Screen name="Donor Sekarang" component={QrComponent}options={{
             title: "Donor Sekarang",
             tabBarIcon: (props) => (
             <IconBottom data={props} image={require('../asset/barcode.png')} />
-            )
-        }} />
-        <AppTabs.Screen name="Lokasi Donor" component={LocationComponent}options={{
-            title: "Lokasi Donor",
-            tabBarIcon: (props) => (
-            <IconBottom data={props} image={require('../asset/location.png')} />
             )
         }} />
         <AppTabs.Screen name="Profil" component={ProfilStackScreen}options={{

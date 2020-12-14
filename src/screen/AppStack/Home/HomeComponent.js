@@ -17,6 +17,7 @@ const HomeComponent = ({navigation}) => {
     const {user} = useContext(AuthContext);
     const [dataUser, setDataUser] = useState({
         Id:null,
+        NoKTP:null,
         Nama:null,
         TempatLahir:null,
         TanggalLahir:null,
@@ -54,6 +55,7 @@ const HomeComponent = ({navigation}) => {
                     if(datadb.val() === null){
                         database().ref(`/users/${user.uid}`).set({
                             Id: user.uid,
+                            NoKTP: '',
                             Nama: '',
                             TempatLahir: '',
                             TanggalLahir: '',
@@ -73,7 +75,7 @@ const HomeComponent = ({navigation}) => {
                         console.log('APAKAH INI DIJALANIN ??')
                         setDataUser(datadb.val());
 
-                        if(datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
+                        if(datadb.val().NoKTP === ''||datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
                             console.log('NAMA NULL KESINI', datadb.val());
                             PopUpAlert();
                             navigation.reset({
@@ -107,20 +109,20 @@ const HomeComponent = ({navigation}) => {
                         <ImageBackground
                             source={{uri: 'https://miro.medium.com/max/1424/1*sHmqYIYMV_C3TUhucHrT4w.png'}}
                             style={styles.imageBackground4}> 
-                            <ImageBackground
-                                source={require('../../../asset/goldardummy.png')}
-                                style={styles.imageBackground5}> 
-                            </ImageBackground>
+                        <Text style={{marginTop:100, fontSize:40, fontWeight:'bold', marginLeft:30}}>{dataUser.GolonganDarah}</Text>
                         </ImageBackground>
                         <View style={{flexDirection:'column', marginRight:0}}>
                         <Text style={{marginTop:10, flexDirection:'column'}}>No. ID : {dataUser.Id}</Text>
+                            <Text>No KTP : 1234567891011{dataUser.NoKTP}</Text>
                             <Text>Nama : {dataUser.Nama}</Text>
+                            <Text>Jenis Kelamin : {dataUser.JenisKelamin}</Text>
                             <Text>Tempat Lahir : {dataUser.TempatLahir}</Text>
                             <Text>Tanggal Lahir : {dataUser.TanggalLahir}</Text>
                             <Text>Alamat : {dataUser.Alamat}</Text>
                             <Text>Wilayah : {dataUser.Wilayah}</Text>
                             <Text>No. Telp : {dataUser.NoHandphone}</Text>
-                            <Text>Jenis Kelamin : {dataUser.JenisKelamin}</Text>
+
+
                         </View>
                     </View>
                 </View>
@@ -162,6 +164,37 @@ const HomeComponent = ({navigation}) => {
             <View style={styles.footer2}>
             <View style={{flexDirection:"row", marginTop:15}}>
                 <TouchableOpacity
+                onPress={()=>navigation.navigate("Lokasi Donor")}
+                style={[styles.button,{
+                    borderColor:'#8a0303',
+                    borderWidth:1,
+                    borderRadius:15,
+                    marginTop:15
+                }]}>
+                    <ImageBackground 
+                    source={require('../../../asset/Lokasi.png')}
+                    style={styles.imageBackground2}
+                    >
+                    </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity
+                onPress={()=>navigation.navigate("History")}
+                style={[styles.button,{
+                    backgroundColor:'#8a0303',
+                    borderRadius:15,
+                    marginTop:15,
+                    marginLeft:20
+                }]}>
+                    <ImageBackground 
+                    source={require('../../../asset/history2.png')}
+                    style={styles.imageBackground2}
+                    >
+                    </ImageBackground>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.footer2}>
+            <View style={{flexDirection:"row", marginTop:15}}>
+                <TouchableOpacity
                 onPress={()=>navigation.navigate("Poin")}
                 style={[styles.button,{
                     borderColor:'#8a0303',
@@ -191,24 +224,7 @@ const HomeComponent = ({navigation}) => {
                 </TouchableOpacity>
     
             </View>
-            <View style={styles.footer2}>
-            <View style={{flexDirection:"row", marginTop:15}}>
-                <TouchableOpacity
-                onPress={()=>navigation.navigate("Kartu")}
-                style={[styles.button2,{
-                    borderColor:'#8a0303',
-                    borderWidth:1,
-                    borderRadius:15,
-                    marginTop:15
-                }]}>
-                    <ImageBackground 
-                    source={require('../../../asset/kartu.png')}
-                    style={styles.imageBackground2}
-                    >
-                    </ImageBackground>
-                </TouchableOpacity>
-            </View>
-            </View>    
+            </View>   
             </View>    
             </View> 
             </View>
@@ -279,7 +295,7 @@ const HomeComponent = ({navigation}) => {
     alignItems: 'center',
     },
     imageBackground3:{
-        width: width*0.9,
+        width: width*1.03,
         height: width*0.70,
         alignItems:'center',
         justifyContent:'center'
@@ -289,7 +305,7 @@ const HomeComponent = ({navigation}) => {
         height: 100,
         marginBottom:130,
         marginTop:10,
-        marginRight:30
+        marginRight:10
     },
     imageBackground5:{
         width: 70,

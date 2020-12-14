@@ -18,6 +18,7 @@ import database from '@react-native-firebase/database';
 const EditComponent = ({navigation}) => {
 
     const {user} = useContext(AuthContext);
+    const [dataKTP, setDataKTP] = useState();
     const [dataNama, setDataNama] = useState();
     const [dataTempatLahir, setDataTempatLahir] = useState();
     const [dataTanggalLahir, setDataTanggalLahir] = useState();
@@ -30,6 +31,7 @@ const EditComponent = ({navigation}) => {
     const Post = () => {
         database().ref(`/users/${user.uid}`).update({
             Id: user.uid,
+            KTP: dataKTP,
             Nama: dataNama,
             TempatLahir: dataTempatLahir,
             TanggalLahir: dataTanggalLahir,
@@ -56,12 +58,14 @@ const EditComponent = ({navigation}) => {
             <Text style={styles.title}>Edit Profil</Text>
             <View style={styles.action}>
             
-                {/* <View style={styles.section}>
+                <View style={styles.section}>
                     <TextInput
-                        placeholder='No Register'
-                        style={styles.textInput}>
+                        placeholder='No KTP'
+                        style={styles.textInput}
+                        onChangeText={(input) =>setDataKTP(input)}
+                        value={dataKTP}>
                         </TextInput>
-                </View> */}
+                </View> 
                 <View style={styles.section}>
                     <TextInput
                         placeholder='Nama'

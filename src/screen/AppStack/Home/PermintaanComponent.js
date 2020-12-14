@@ -24,6 +24,7 @@ const PermintaanComponent = ({navigation}) => {
     const [jumlahDarah, setJumlahDarah] = useState();
     const [keteranganLain, setKeteranganLain] = useState();
     const [noHandphone, setNoHandphone] = useState();
+    const [alamat, setAlamat] = useState();
 
     const Post = () => {
         console.log('REF :', permintaan);
@@ -34,7 +35,8 @@ const PermintaanComponent = ({navigation}) => {
             GolonganDarah: golonganDarah,
             JumlahDarah: jumlahDarah,
             KeteranganLain: keteranganLain,
-            NoHandphone: noHandphone
+            NoHandphone: noHandphone,
+            Alamat: alamat,
         }).then(() => {
             ToastAndroid.show('Submit Data Berhasil !', ToastAndroid.SHORT);
         });
@@ -86,14 +88,6 @@ const PermintaanComponent = ({navigation}) => {
 
             <Text style={styles.title}>Buat Permintaan Darah</Text>
             <View style={styles.action}>
-            <View style={styles.section}>
-                    <TextInput 
-                    placeholder='No KTP'
-                    style={styles.textInput}
-                    >
-
-                    </TextInput>
-                </View>
                 <View style={styles.section}>
                     <TextInput
                         placeholder='Nama Peminta Darah'
@@ -152,6 +146,7 @@ const PermintaanComponent = ({navigation}) => {
                     <TextInput 
                     placeholder='Alamat'
                     style={styles.textInput}
+                    onChangeText={(input) => setAlamat(input)}
                     >
 
                     </TextInput>

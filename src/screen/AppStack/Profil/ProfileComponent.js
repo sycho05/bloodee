@@ -20,6 +20,7 @@ const ProfileComponent = ({navigation}) => {
 
     const [dataUser, setDataUser] = useState({
         Id:null,
+        NoKTP:null,
         Nama:null,
         TempatLahir:null,
         TanggalLahir:null,
@@ -58,6 +59,9 @@ const ProfileComponent = ({navigation}) => {
             </View>
                 <View style={{justifyContent:'center', alignContent:'center',backgroundColor:'#fff', borderRadius:25, elevation:10, marginHorizontal:10, marginTop:10}}>
                     <Text style={{paddingLeft:20, paddingVertical:10}}>Id : {dataUser.Id}</Text>
+                </View>
+                <View style={{justifyContent:'center', alignContent:'center',backgroundColor:'#fff', borderRadius:25, elevation:10, marginHorizontal:10, marginTop:10}}>
+                    <Text style={{paddingLeft:20, paddingVertical:10}}>NoKTP : {dataUser.NoKTP}</Text>
                 </View>
                 <View style={{justifyContent:'center', alignContent:'center',backgroundColor:'#fff', borderRadius:25, elevation:10, marginHorizontal:10, marginTop:10}}>
                     <Text style={{paddingLeft:20, paddingVertical:10}}>Nama : {dataUser.Nama}</Text>
