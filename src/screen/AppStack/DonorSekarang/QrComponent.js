@@ -4,13 +4,9 @@ import {
     Text,
     StyleSheet,
     ImageBackground,
-    ImageBackgroundBase,
     Dimensions,
     TouchableOpacity,
     FlatList,
-    Button,
-    ScrollView,
-    SafeAreaView,
     Alert
 } from 'react-native';
 import {AuthContext} from '../../../auth/AuthProvider';
@@ -22,43 +18,43 @@ const QrScreen = ({navigation}) => {
 
     const PopUpAlert = () =>{
         Alert.alert(
-            "AlertQR",
-            "Mohon Lengkapi Data Diri terlebih dahulu sebelum dapat mengakses menu lainnya",
+            "Alert",
+            "Mohon lengkapi data diri terlebih dahulu sebelum dapat mengakses menu lainnya",
             [
-                {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
                 { 
                     text: "OK", onPress: () => console.log("OK Pressed") 
-                }
+                },
             ],
             { cancelable: false }
         );
     }
 
     useEffect(() => {
-        const onValueChange = database()
-          .ref(`/users/${user.uid}`)
-          .on('value', datadb => {
-            console.log('User data: ', datadb.val());
-            console.log('APAKAH INI DIJALANIN ??')
-            if(datadb.val().NoKTP === ''|| datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
-                console.log('NAMA NULL KESINI', datadb.val());
-                PopUpAlert();
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Profil' }],
-                    });
-            }
-          });
-    
-        // Stop listening for updates when no longer required
-        return () =>
-          database()
+        try{
+            const onValueChange = database()
             .ref(`/users/${user.uid}`)
-            .off('value', onValueChange);
+            .on('value', datadb => {
+              console.log('User data: ', datadb.val());
+              console.log('APAKAH INI DIJALANIN ??')
+              if(datadb.val().NoKTP === ''|| datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
+                  console.log('NAMA NULL KESINI', datadb.val());
+                  PopUpAlert();
+                  navigation.reset({
+                      index: 0,
+                      routes: [{ name: 'Profil' }],
+                      });
+              }
+            });
+      
+            return () =>
+                database()
+                .ref(`/users/${user.uid}`)
+                .off('value', onValueChange);
+        }
+        catch(e){
+            console.log(e);
+        }
+        
       }, []);
 
     return(
@@ -95,8 +91,7 @@ const QrScreen = ({navigation}) => {
 export default QrScreen;
 
 const width = Dimensions.get('screen').width
-const width_button = width * 0.2;
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'white',
@@ -107,53 +102,9 @@ var styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
-    footer2:{
-        flex:1,
-        paddingHorizontal:20,
-        },
-    tabbar: {
-        flex:1
-    },
     imageBackground:{
         width: width*0.5,
         height: width*0.5 ,
         alignItems:'center'
     },
-    imageBackground2:{
-        width: width*0.7,
-        height: width*0.7,
-        alignItems:'center',
-        justifyContent:'center'
-    },
-    title: {
-        color:'black',
-        marginTop:10,
-        marginLeft:10,
-        fontWeight:'bold',
-        fontSize:20,
-        alignItems:'center'
-    },
-    money: {
-        color:'black',
-        marginTop:10,
-        marginLeft:10,
-        fontWeight:'bold',
-        fontSize:25,
-        alignItems:'center'
-    },
-    topUp:{
-        flex:2,
-        alignItems:'center'
-    },
-    button: {
-    width:width_button,
-    height:40,
-    justifyContent:'center',
-    alignItems:'center'
-    },
-    imageTopup:{
-    width: width*0.1,
-    height: width*0.1,
-    alignItems:'center'  
-    }
 })

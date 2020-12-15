@@ -4,7 +4,6 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    SafeAreaView,
     ScrollView,
     ImageBackground,
     Dimensions,
@@ -27,26 +26,31 @@ const PermintaanComponent = ({navigation}) => {
     const [alamat, setAlamat] = useState();
 
     const Post = () => {
-        console.log('REF :', permintaan);
-        database().ref(`PermintaanDarah/Permintaan_${user.uid}_${permintaan}`).update({
-            Id: user.uid,
-            NamaPeminta: namaPeminta,
-            NamaPenerima: namaPenerima,
-            GolonganDarah: golonganDarah,
-            JumlahDarah: jumlahDarah,
-            KeteranganLain: keteranganLain,
-            NoHandphone: noHandphone,
-            Alamat: alamat,
-        }).then(() => {
-            ToastAndroid.show('Submit Permintaan Berhasil !', ToastAndroid.SHORT);
-        });
+        try{
+            console.log('REF :', permintaan);
+            database().ref(`PermintaanDarah/Permintaan_${user.uid}_${permintaan}`).update({
+                Id: user.uid,
+                NamaPeminta: namaPeminta,
+                NamaPenerima: namaPenerima,
+                GolonganDarah: golonganDarah,
+                JumlahDarah: jumlahDarah,
+                KeteranganLain: keteranganLain,
+                NoHandphone: noHandphone,
+                Alamat: alamat,
+            }).then(() => {
+                ToastAndroid.show('Submit Permintaan Berhasil !', ToastAndroid.SHORT);
+            });
+        }
+        catch(e){
+            console.log(e);
+        }
         
       }
 
       const storeData = () => {
         try {
 
-            database().ref(`/counter/users/${user.uid}`).update({
+            database().ref(`/counter/users/${user.uid}/key-permintaan`).update({
                 key: permintaan,
             });
             console.log('key counter store firebase sukses');
@@ -56,28 +60,33 @@ const PermintaanComponent = ({navigation}) => {
       }
 
     useEffect(() => {
-        const onValueChange = database()
-          .ref(`/counter/users/${user.uid}`)
-          .on('value', datadb => {
-            console.log(datadb.val());
-                if(datadb.val() !== null) {
-                    const data = datadb.val().key;
-                    setPermintaan(data+1);
-                    console.log('key counter get firebase sukses');
-                    
-                }else{
-                    setPermintaan(1);
-                    console.log('key counter get firebase kosong');
-                }
-          });
-        return () =>
-          database()
-            .ref(`/counter/users/${user.uid}`)
-            .off('value', onValueChange);
+        try{
+            const onValueChange = database()
+            .ref(`/counter/users/${user.uid}/key-permintaan`)
+            .on('value', datadb => {
+              console.log(datadb.val());
+                  if(datadb.val() !== null) {
+                      const data = datadb.val().key;
+                      setPermintaan(data+1);
+                      console.log('key counter get firebase sukses');
+                      
+                  }else{
+                      setPermintaan(1);
+                      console.log('key counter get firebase kosong');
+                  }
+            });
+            return () =>
+                database()
+                .ref(`/counter/users/${user.uid}/key-permintaan`)
+                .off('value', onValueChange);
+            }
+            catch(e){
+                console.log(e);
+            }
       }, []);
 
     const submitPermintaan = () => {
-        if( permintaan && namaPeminta && namaPenerima && golonganDarah && jumlahDarah && keteranganLain && noHandphone && alamat){
+        if( namaPeminta && namaPenerima && golonganDarah && jumlahDarah && keteranganLain && noHandphone && alamat){
             Post();
             setPermintaan(permintaan+1);
             storeData();
@@ -87,7 +96,6 @@ const PermintaanComponent = ({navigation}) => {
         }
     }
   
-
     return(
         <View style={styles.container}>
 

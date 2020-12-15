@@ -30,7 +30,7 @@ const HomeComponent = ({navigation}) => {
     const PopUpAlert = () =>{
         Alert.alert(
             "Alert",
-            "Mohon Lengkapi Data Diri terlebih dahulu sebelum dapat mengakses menu lainnya",
+            "Mohon lengkapi data diri terlebih dahulu sebelum dapat mengakses menu lainnya",
             [
                 { 
                     text: "OK", onPress: () => console.log("OK Pressed") 
@@ -41,49 +41,53 @@ const HomeComponent = ({navigation}) => {
     }
 
     useEffect(() => {
-        const onValueChange = database()
-          .ref(`/users/${user.uid}`)
-          .on('value', datadb => {
-            console.log('User data: ', datadb.val());
-            if(datadb.val() === null){
-                database().ref(`/users/${user.uid}`).set({
-                    Id: user.uid,
-                    NoKTP: '',
-                    Nama: '',
-                    TempatLahir: '',
-                    TanggalLahir: '',
-                    Alamat: '',
-                    Wilayah: '',
-                    JenisKelamin: '',
-                    GolonganDarah: '',
-                    NoHandphone: '',
-                });
-                console.log('User AKTIF');
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Profil' }],
-                  });
-                PopUpAlert();
-            }else{
-                console.log('APAKAH INI DIJALANIN ??')
-                setDataUser(datadb.val());
-
-                if(datadb.val().NoKTP === ''|| datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
-                    console.log('NAMA NULL KESINI', datadb.val());
-                    PopUpAlert();
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Profil' }],
-                      });
-                }
-            }
-          });
-    
-        // Stop listening for updates when no longer required
-        return () =>
-          database()
+        try{
+            const onValueChange = database()
             .ref(`/users/${user.uid}`)
-            .off('value', onValueChange);
+            .on('value', datadb => {
+              console.log('User data: ', datadb.val());
+              if(datadb.val() === null){
+                  database().ref(`/users/${user.uid}`).set({
+                      Id: user.uid,
+                      NoKTP: '',
+                      Nama: '',
+                      TempatLahir: '',
+                      TanggalLahir: '',
+                      Alamat: '',
+                      Wilayah: '',
+                      JenisKelamin: '',
+                      GolonganDarah: '',
+                      NoHandphone: '',
+                  });
+                  console.log('User Baru');
+                  navigation.reset({
+                      index: 0,
+                      routes: [{ name: 'Profil' }],
+                    });
+                  PopUpAlert();
+              }else{
+                console.log('User Lama');
+                  setDataUser(datadb.val());
+  
+                  if(datadb.val().NoKTP === ''|| datadb.val().Nama === '' || datadb.val().TempatTinggal === '' || datadb.val().TanggalLahir === '' || datadb.val().Alamat === '' || datadb.val().Wilayah === '' || datadb.val().JenisKelamin === '' || datadb.val().GolonganDarah === '' || datadb.val().NoHandphone === ''){
+                      PopUpAlert();
+                      navigation.reset({
+                          index: 0,
+                          routes: [{ name: 'Profil' }],
+                        });
+                  }
+              }
+            });
+      
+          return () =>
+            database()
+              .ref(`/users/${user.uid}`)
+              .off('value', onValueChange);
+        }
+        catch(e){
+            console.log(e);
+        }
+        
       }, []);
 
 return (

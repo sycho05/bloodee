@@ -18,7 +18,8 @@ const HistoryComponent = () => {
     const [dataHistory, setDataHistory] = useState([]);
     
     useEffect(() => {
-      const onValueChange = database()
+      try{
+        const onValueChange = database()
         .ref(`/History/${user.uid}`)
         .on('value', snapshot => {
           const dataTemp = []
@@ -32,13 +33,17 @@ const HistoryComponent = () => {
                 });
                 return false;
               });
-              //console.log('Data Permintaan :',dataTemp);
               setDataHistory(dataTemp);
         });
-      return () =>
-        database()
-          .ref(`/History/${user.uid}`)
-          .off('value', onValueChange);
+        return () =>
+          database()
+            .ref(`/History/${user.uid}`)
+            .off('value', onValueChange);
+      }
+      catch(e){
+        console.log(e);
+      }
+      
     }, []);
 
     const Item = ({ item, onPress, style }) => (
@@ -50,12 +55,12 @@ const HistoryComponent = () => {
     );
     
     const renderItem = ({ item }) => {
-      const backgroundColor = item.id === selectedId ? "#f2f2f2" : "#fff";
+      const backgroundColor = item.data.id === selectedId ? "#f2f2f2" : "#fff";
   
       return (
         <Item
           item={item}
-          onPress={() => setSelectedId(item.id)}
+          onPress={() => setSelectedId(item.data.id)}
           style={{ backgroundColor }}
         />
       );
@@ -90,37 +95,16 @@ export default HistoryComponent;
 const width = Dimensions.get('screen').width
 const width_button = width * 0.2;
 const styles = StyleSheet.create({
-
-    containerlist: {
-        flex:1,
-        marginTop: 5,
-        backgroundColor:'#fafafa',
-        borderRadius:5,
-        paddingTop:2,
-        elevation:2
-      },
-      item: {
-        padding: 10,
-        marginVertical: 8,
-        marginHorizontal: 16,
-        borderRadius:20,
-        elevation:2,
-      },
-      transaksi: {
-        fontSize: 15,
-        color:'#000'
-      },
-      deskripsi: {
-          fontSize:15,
-      },
-      title: {
-        fontSize:20,
-        color:'white',
-        fontWeight:'bold',
-        marginBottom:10
-      },
-
-
+    item: {
+      padding: 10,
+      marginVertical: 8,
+      marginHorizontal: 16,
+      borderRadius:20,
+      elevation:2,
+    },
+    deskripsi: {
+        fontSize:15,
+    },
     container:{
         flex:1,
         backgroundColor:'white',
@@ -131,53 +115,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
-    footer2:{
-        flex:1,
-        paddingHorizontal:20,
-        },
-    tabbar: {
-        flex:1
-    },
     imageBackground:{
         width: width*0.5,
         height: width*0.5 ,
         alignItems:'center'
     },
-    imageBackground2:{
-        width: width*0.25,
-        height: width*0.25,
-        alignItems:'center',
-        justifyContent:'center'
-    },
-    title: {
-        color:'black',
-        marginTop:10,
-        marginLeft:10,
-        fontWeight:'bold',
-        fontSize:20,
-        alignItems:'center'
-    },
-    money: {
-        color:'black',
-        marginTop:10,
-        marginLeft:10,
-        fontWeight:'bold',
-        fontSize:25,
-        alignItems:'center'
-    },
-    topUp:{
-        flex:2,
-        alignItems:'center'
-    },
-    button: {
-    width:width_button,
-    height:40,
-    justifyContent:'center',
-    alignItems:'center'
-    },
-    imageTopup:{
-    width: width*0.1,
-    height: width*0.1,
-    alignItems:'center'  
-    }
 })

@@ -4,13 +4,10 @@ import {
     Text,
     StyleSheet,
     ImageBackground,
-    ImageBackgroundBase,
     Dimensions,
     TouchableOpacity,
     FlatList,
-    Button,
     ScrollView,
-    SafeAreaView,
 } from 'react-native';
 
 const MyVoucherComponent = () => {

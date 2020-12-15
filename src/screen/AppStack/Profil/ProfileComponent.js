@@ -28,17 +28,22 @@ const ProfileComponent = ({navigation}) => {
     });
 
     useEffect(() => {
-        const onValueChange = database()
-        .ref(`/users/${user.uid}`)
-        .on('value', snapshot => {
-            setDataUser(snapshot.val());
-            //console.log('Data User : ', snapshot.val());
-            });
-    
-        return () =>
-          database()
+        try{
+            const onValueChange = database()
             .ref(`/users/${user.uid}`)
-            .off('value', onValueChange);
+            .on('value', snapshot => {
+                setDataUser(snapshot.val());
+                });
+        
+            return () =>
+              database()
+                .ref(`/users/${user.uid}`)
+                .off('value', onValueChange);
+        }
+        catch(e){
+            console.log(e);
+        }
+        
       }, []);
 
     return(

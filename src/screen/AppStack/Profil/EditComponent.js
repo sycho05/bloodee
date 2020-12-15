@@ -4,7 +4,6 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    SafeAreaView,
     ScrollView,
     ImageBackground,
     Dimensions,
@@ -46,25 +45,30 @@ const EditComponent = ({navigation}) => {
       }
 
     useEffect(() => {
-    const onValueChange = database()
-    .ref(`/users/${user.uid}`)
-    .on('value', snapshot => {
-        setDataKTP(snapshot.val().NoKTP);
-        setDataNama(snapshot.val().Nama);
-        setDataTempatLahir(snapshot.val().TempatLahir);
-        setDataTanggalLahir(snapshot.val().TanggalLahir);
-        setDataAlamat(snapshot.val().Alamat);
-        setDataWilayah(snapshot.val().Wilayah);
-        setDataJenisKelamin(snapshot.val().JenisKelamin);
-        setDataGolonganDarah(snapshot.val().GolonganDarah);
-        setDataNoHandphone(snapshot.val().NoHandphone);
-        //console.log('Data User : ', snapshot.val());
-        });
-
-    return () =>
-        database()
-        .ref(`/users/${user.uid}`)
-        .off('value', onValueChange);
+        try{
+            const onValueChange = database()
+            .ref(`/users/${user.uid}`)
+            .on('value', snapshot => {
+                setDataKTP(snapshot.val().NoKTP);
+                setDataNama(snapshot.val().Nama);
+                setDataTempatLahir(snapshot.val().TempatLahir);
+                setDataTanggalLahir(snapshot.val().TanggalLahir);
+                setDataAlamat(snapshot.val().Alamat);
+                setDataWilayah(snapshot.val().Wilayah);
+                setDataJenisKelamin(snapshot.val().JenisKelamin);
+                setDataGolonganDarah(snapshot.val().GolonganDarah);
+                setDataNoHandphone(snapshot.val().NoHandphone);
+                });
+    
+            return () =>
+                database()
+                .ref(`/users/${user.uid}`)
+                .off('value', onValueChange);
+        }
+        catch(e){
+            console.log(e);
+        }
+        
     }, []);
 
     return(
