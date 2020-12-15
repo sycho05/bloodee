@@ -45,6 +45,28 @@ const EditComponent = ({navigation}) => {
         });
       }
 
+    useEffect(() => {
+    const onValueChange = database()
+    .ref(`/users/${user.uid}`)
+    .on('value', snapshot => {
+        setDataKTP(snapshot.val().NoKTP);
+        setDataNama(snapshot.val().Nama);
+        setDataTempatLahir(snapshot.val().TempatLahir);
+        setDataTanggalLahir(snapshot.val().TanggalLahir);
+        setDataAlamat(snapshot.val().Alamat);
+        setDataWilayah(snapshot.val().Wilayah);
+        setDataJenisKelamin(snapshot.val().JenisKelamin);
+        setDataGolonganDarah(snapshot.val().GolonganDarah);
+        setDataNoHandphone(snapshot.val().NoHandphone);
+        //console.log('Data User : ', snapshot.val());
+        });
+
+    return () =>
+        database()
+        .ref(`/users/${user.uid}`)
+        .off('value', onValueChange);
+    }, []);
+
     return(
         <View style={styles.container}>
             <View style={{margin:25, justifyContent:'center', alignContent:'center'}}>
@@ -52,9 +74,10 @@ const EditComponent = ({navigation}) => {
             <Text style={styles.title}>Edit Profil</Text>
                 <View style={styles.section}>
                     <TextInput
-                        placeholder='No KTP'
+                        placeholder='No. KTP'
                         style={styles.textInput}
                         onChangeText={(input) =>setDataKTP(input)}
+                        value={dataKTP}
                         >
                         </TextInput>
                 </View> 
@@ -63,6 +86,7 @@ const EditComponent = ({navigation}) => {
                         placeholder='Nama'
                         style={styles.textInput}
                         onChangeText={(input) => setDataNama(input)}
+                        value={dataNama}
                         >
 
                         </TextInput>
@@ -72,21 +96,30 @@ const EditComponent = ({navigation}) => {
                     placeholder='Tempat Lahir'
                     style={styles.textInput}
                     onChangeText={(input) => setDataTempatLahir(input)}
-                    ></TextInput>
+                    value={dataTempatLahir}
+                    >
+
+                    </TextInput>
                 </View>
                 <View style={styles.section}>
                     <TextInput 
                     placeholder='Tanggal Lahir'
                     style={styles.textInput}
                     onChangeText={(input) => setDataTanggalLahir(input)}
-                    ></TextInput>
+                    value={dataTanggalLahir}
+                    >
+
+                    </TextInput>
                 </View>
                 <View style={styles.section}>
                     <TextInput 
                     placeholder='Alamat'
                     style={styles.textInput}
                     onChangeText={(input) => setDataAlamat(input)}
-                    ></TextInput>
+                    value={dataAlamat}
+                    >
+
+                    </TextInput>
                 </View>
                 <View style={styles.section}>
                     <TextInput 
@@ -101,21 +134,30 @@ const EditComponent = ({navigation}) => {
                     placeholder='Jenis Kelamin'
                     style={styles.textInput}
                     onChangeText={(input) => setDataJenisKelamin(input)}
-                    ></TextInput>
+                    value={dataJenisKelamin}
+                    >
+
+                    </TextInput>
                 </View>
                 <View style={styles.section}>
                     <TextInput 
                     placeholder='Golongan Darah'
                     style={styles.textInput}
                     onChangeText={(input) => setDataGolonganDarah(input)}
-                    ></TextInput>
+                    value={dataGolonganDarah}
+                    >
+
+                    </TextInput>
                 </View>
                 <View style={styles.section}>
                     <TextInput 
-                    placeholder='No. Hanphone'
+                    placeholder='No. Handphone'
                     style={styles.textInput}
                     onChangeText={(input) => setDataNoHandphone(input)}
-                    ></TextInput>
+                    value={dataNoHandphone}
+                    >
+
+                    </TextInput>
                 </View>
         
             <View style={{flexDirection:"row",justifyContent:'center', alignItems:'center', marginBottom:10, marginHorizontal:20}}>

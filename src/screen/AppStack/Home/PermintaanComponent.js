@@ -38,7 +38,7 @@ const PermintaanComponent = ({navigation}) => {
             NoHandphone: noHandphone,
             Alamat: alamat,
         }).then(() => {
-            ToastAndroid.show('Submit Data Berhasil !', ToastAndroid.SHORT);
+            ToastAndroid.show('Submit Permintaan Berhasil !', ToastAndroid.SHORT);
         });
         
       }
@@ -54,13 +54,12 @@ const PermintaanComponent = ({navigation}) => {
           console.log(e);
         }
       }
-    
-      const getData = () => {
-        try {
-            database()
-            .ref(`/counter/users/${user.uid}`)
-            .on('value', datadb => {
 
+    useEffect(() => {
+        const onValueChange = database()
+          .ref(`/counter/users/${user.uid}`)
+          .on('value', datadb => {
+            console.log(datadb.val());
                 if(datadb.val() !== null) {
                     const data = datadb.val().key;
                     setPermintaan(data+1);
@@ -70,17 +69,23 @@ const PermintaanComponent = ({navigation}) => {
                     setPermintaan(1);
                     console.log('key counter get firebase kosong');
                 }
-            });
-        
-        } catch(e) {
-            console.log(e);
-            setPermintaan(1);
+          });
+        return () =>
+          database()
+            .ref(`/counter/users/${user.uid}`)
+            .off('value', onValueChange);
+      }, []);
+
+    const submitPermintaan = () => {
+        if( permintaan && namaPeminta && namaPenerima && golonganDarah && jumlahDarah && keteranganLain && noHandphone && alamat){
+            Post();
+            setPermintaan(permintaan+1);
+            storeData();
+            navigation.navigate('Submit')
+        }else{
+            ToastAndroid.show('Mohon Isi Seluruh Input !', ToastAndroid.SHORT);
         }
     }
-
-    useEffect(() => {
-        getData();
-    }, [])
   
 
     return(
@@ -154,7 +159,7 @@ const PermintaanComponent = ({navigation}) => {
             </View>
             <View style={{flexDirection:'row',flex:2,justifyContent:'center', alignItems:'center'}}>
             <TouchableOpacity 
-            onPress={()=> {Post();setPermintaan(permintaan+1);storeData();navigation.navigate('Submit')} } //navigation.navigate("Submit");
+            onPress={()=> {submitPermintaan();} } //navigation.navigate("Submit");
             style={styles.login}> 
                 <Text style={styles.textLogin}>Submit</Text>
             </TouchableOpacity>

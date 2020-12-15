@@ -18,6 +18,13 @@ export const AuthProvider = ({children}) => {
                         });
                     } catch(e){
                         console.log(e);
+                        if (e.code === 'auth/invalid-email') {
+                            ToastAndroid.show('Email Tidak Valid !', ToastAndroid.SHORT);
+                        }
+                        if (e.code === 'auth/user-not-found') {
+                            ToastAndroid.show('User Tidak Ditemukan. Silahkan Cek Kembali Email/Password !', ToastAndroid.SHORT);
+                        }
+                        
                     }
                 },
                 register: async (email, password) => {
@@ -30,8 +37,8 @@ export const AuthProvider = ({children}) => {
                             ToastAndroid.show('Email Sudah Digunakan !', ToastAndroid.SHORT);
                         }
                         if (e.code === 'auth/invalid-email') {
-                            console.log('Alamat Email Tidak Valid !');
-                          }
+                            ToastAndroid.show('Email Tidak Valid !', ToastAndroid.SHORT);
+                        }
                         console.log(e);
                     }
                 },

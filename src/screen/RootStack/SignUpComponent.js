@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     SafeAreaView,
     ScrollView,
+    ToastAndroid,
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {AuthContext} from '../../auth/AuthProvider';
@@ -14,84 +15,44 @@ const SignUpComponent = ({navigation}) => {
 
     const {register} = useContext(AuthContext);
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+
+    const userSignUp = () =>{
+        if(email && password){
+            if(password.length < 8){
+                ToastAndroid.show('Password Minimal Terdiri Dari 8 Huruf !', ToastAndroid.SHORT);
+            }else{
+                register(email, password);
+            }      
+        }else{
+            console.log(email,'||', password);
+            ToastAndroid.show('Email/Password Tidak Boleh Kosong !', ToastAndroid.SHORT);
+        }
+    }
+    
 
         return(
-            <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
             <View style={styles.container}>
                 <Text style={styles.title}>Sign Up</Text>
                 <View style={styles.action}>
-                    {/* <View style={styles.section}>
-                        <TextInput
-                            placeholder='Nama Lengkap'
-                            style={styles.textInput}>
-                            </TextInput>
-                    </View>
-                    
-                    <View style={styles.section}>
-                        <TextInput
-                            placeholder='Tempat Lahir'
-                            style={styles.textInput}>
-
-                            </TextInput>
-                    </View>
-                    <View style={styles.section}>
-                        <TextInput 
-                        placeholder='Tanggal Lahir'
-                        style={styles.textInput}></TextInput>
-                    </View>
-                    <View style={styles.section}>
-                        <TextInput 
-                        placeholder='Alamat'
-                        style={styles.textInput}></TextInput>
-                    </View>
-                    <View style={styles.section}>
-                        <TextInput 
-                        placeholder='Wilayah'
-                        style={styles.textInput}></TextInput>
-                    </View>
-                    <View style={styles.section}>
-                        <TextInput 
-                        placeholder='Jenis Kelamin'
-                        style={styles.textInput}></TextInput>
-                    </View>
-                    <View style={styles.section}>
-                        <TextInput 
-                        placeholder='Golongan Darah dan Rhesus'
-                        style={styles.textInput}></TextInput>
-                    </View> */}
                     <View style={styles.section}>
                         <TextInput 
                         placeholder='Email'
                         style={styles.textInput}
                         onChangeText={(userEmail) => setEmail(userEmail)}
-                        value={email}
                         ></TextInput>
                     </View>
-                    {/* <View style={styles.section}>
-                        <TextInput 
-                        placeholder='No Handphone'
-                        style={styles.textInput}></TextInput>
-                    </View> */}
                     <View style={styles.section}>
                         <TextInput 
                         placeholder='Password'
                         style={styles.textInput} secureTextEntry={true}
                         onChangeText={(userPassword) => setPassword(userPassword)}
-                        value={password}
                         ></TextInput>
                     </View>
-                    {/* <View style={styles.section}>
-                        <TextInput 
-                        placeholder='Konfirmasi Password'
-                        style={styles.textInput} secureTextEntry={true} 
-                        ></TextInput>
-                    </View> */}
                 </View>
                 <TouchableOpacity 
-                onPress={() => register(email, password)}
+                onPress={() => userSignUp()}
                 style={styles.login}> 
                     <Text style={styles.textLogin}>Register</Text>
                 </TouchableOpacity>
@@ -100,8 +61,6 @@ const SignUpComponent = ({navigation}) => {
                     <Text style={styles.signUp}>Already have an account?</Text>
                 </TouchableOpacity>
             </View>
-            </ScrollView>
-    </SafeAreaView>
         )
 }
 

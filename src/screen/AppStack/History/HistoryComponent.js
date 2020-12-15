@@ -26,8 +26,8 @@ const HistoryComponent = () => {
                 dataTemp.push({ data : {
                     id: item.key,
                     Id: item.val().Id,
-                    Tanggal: item.val().Donor,
-                    Lokasi: item.val().GolonganDarah,
+                    Tanggal: item.val().Tanggal,
+                    Lokasi: item.val().Lokasi,
                 }      
                 });
                 return false;

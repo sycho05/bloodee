@@ -25,7 +25,7 @@ export default class PoinComponent extends React.Component{
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.title}>Poin Saya: 200000 </Text>
+            <Text style={styles.title}>Poin Saya: 0 </Text>
             <View style={styles.footer2}>
             <Text style={{marginTop:10, fontWeight:'bold', fontSize:15}}>Voucher yang dapat ditukar     </Text>
             <View style={{flexDirection:"row",marginTop: 40}}>
@@ -42,7 +42,7 @@ export default class PoinComponent extends React.Component{
                     <Text style={{marginTop:20}}>Poin Penukaran: 1000</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                onPress={()=>this.props.navigation.navigate("Info")}
+                onPress={()=>this.props.navigation.navigate("Voucher1")}
                 style={[styles.button,{
                     borderColor:'#8a0303',
                     borderRadius:15,
@@ -59,7 +59,7 @@ export default class PoinComponent extends React.Component{
             <View style={styles.footer2}>
             <View style={{flexDirection:"row", marginTop:15}}>
                 <TouchableOpacity
-                onPress={()=>this.props.navigation.navigate("SignUpScreen")}
+                onPress={()=>this.props.navigation.navigate("Voucher1")}
                 style={[styles.button,{
                     borderColor:'#8a0303',
                     borderWidth:1,
@@ -71,7 +71,7 @@ export default class PoinComponent extends React.Component{
                     <Text style={{marginTop:20}}>Poin Penukaran: 3000</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                onPress={()=>this.props.navigation.navigate("LoginScreen")}
+                onPress={()=>this.props.navigation.navigate("Voucher1")}
                 style={[styles.button,{
                     borderColor:'#8a0303',
                     borderRadius:15,

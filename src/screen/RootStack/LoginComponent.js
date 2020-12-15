@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    TextInput, 
+    TextInput,
+    ToastAndroid,
 } from 'react-native';
 import {AuthContext} from '../../auth/AuthProvider';
 
@@ -12,8 +13,17 @@ const LoginComponent = ({navigation}) => {
 
     const {login} = useContext(AuthContext);
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+
+    const userLogin = () =>{
+        if(email && password){
+            login(email, password);
+        }else{
+            console.log(email,'||', password);
+            ToastAndroid.show('Email/Password Tidak Boleh Kosong !', ToastAndroid.SHORT);
+        }
+    }
         return(
             <View style={styles.container}>
                 <Text style={styles.title}>Login</Text>
@@ -23,7 +33,6 @@ const LoginComponent = ({navigation}) => {
                             placeholder='Email'
                             style={styles.textInput}
                             onChangeText={(userEmail) => setEmail(userEmail)}
-                            value={email}
                             >
 
                             </TextInput>
@@ -33,7 +42,6 @@ const LoginComponent = ({navigation}) => {
                             placeholder='Password'
                             style={styles.textInput}
                             onChangeText={(userpassword) => setPassword(userpassword)}
-                            value={password}
                             secureTextEntry>
 
                         </TextInput>
@@ -42,7 +50,7 @@ const LoginComponent = ({navigation}) => {
                 <TouchableOpacity>
                     <Text style={styles.forgot}>Forgot Password? </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> login(email, password)}
+                <TouchableOpacity onPress={()=> userLogin()}
                     style={styles.login}> 
                     <Text style={styles.textLogin}>Login</Text>
                 </TouchableOpacity>

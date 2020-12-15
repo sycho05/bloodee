@@ -37,12 +37,12 @@ export default class Voucher1Component extends React.Component{
                 <TouchableOpacity 
                 onPress={()=>this.props.navigation.navigate("Poin")}
                 style={styles.login}> 
-                    <Text style={styles.textLogin}>Tutup</Text>
+                    <Text style={styles.textLogin}>Kembali</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                 onPress={()=>this.props.navigation.navigate("Home")}
                 style={styles.login}> 
-                    <Text style={styles.textLogin}>Submit</Text>
+                    <Text style={styles.textLogin}>Tukar</Text>
                 </TouchableOpacity>
                 
             </View>  

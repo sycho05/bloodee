@@ -44,7 +44,7 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="Home"  component={HomeComponent} options={{headerShown: false}} />
     <HomeStack.Screen name="Permintaan"  component={PermintaanComponent} options={{headerShown: false}} />
     <HomeStack.Screen name="Submit"  component={SubmitDarahComponent} options={{headerShown: false}} />
-    <HomeStack.Screen name="Info"  component={InfoComponent} options={{headerShown: false}} />
+    <HomeStack.Screen name="Info"  component={InfoComponent} options={{headerShown: true}} />
     <HomeStack.Screen name="Poin"  component={PoinComponent} options={{headerShown: false}} />
     <HomeStack.Screen name="Voucher1"  component={Voucher1Component} options={{headerShown: false}} />
     <HomeStack.Screen name="VoucherSaya"  component={MyVoucherComponent} options={{headerShown: true}} />

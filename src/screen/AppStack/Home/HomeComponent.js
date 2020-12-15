@@ -99,16 +99,16 @@ return (
                 <Text style={{fontSize:20, textAlign:'center', marginTop:60}}>Kartu Donor Darah</Text>
                 <Text style={{fontSize:20, textAlign:'center', textDecorationLine:'underline'}}>Bloodee APP</Text>
                 <View style={{flexDirection:'row', justifyContent:'center', alignContent:'center'}}>
-                    <View style={{flexDirection:'column', justifyContent:'center', alignContent:'center', margin:20}}>
+                    <View style={{flexDirection:'column', justifyContent:'center', alignContent:'center', marginTop:20, marginLeft:10}}>
                     <QRCode
                         value={user.uid}
                         size={100}
                     />
                     <Text style={{fontSize:40, fontWeight:'bold', textAlign:'center'}}>{dataUser.GolonganDarah}</Text>
                     </View>
-                    <View style={{flexDirection:'column'}}>
+                    <View style={{flexDirection:'column', marginRight:10,marginLeft:15, marginBottom:10}}>
                         <Text style={{marginTop:10, flexDirection:'column', width:200}} numberOfLines={1}>No. ID : {dataUser.Id}</Text>
-                        <Text>No KTP :{dataUser.NoKTP}</Text>
+                        <Text numberOfLines={1} style={{width:200}}>No KTP :{dataUser.NoKTP}</Text>
                         <Text>Nama : {dataUser.Nama}</Text>
                         <Text>Jenis Kelamin : {dataUser.JenisKelamin}</Text>
                         <Text>Tempat Lahir : {dataUser.TempatLahir}</Text>
