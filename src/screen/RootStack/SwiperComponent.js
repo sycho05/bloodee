@@ -14,39 +14,45 @@ export default class SwiperComponent extends React.Component{
     <Swiper >
         <View style={styles.slide}>
         <View style={styles.header}>
+        <View style={styles.container}>
         <Image
-            source={require('../../asset/bloodee1.png')}
+            resizeMode='contain'
+            source={require('../../asset/aset2.png')}
             style={styles.image}
-            resizeMode={"stretch"}
         />
         </View>
+        </View>
         <View style={styles.footer}>
-        <Text style={styles.title}>*Insert Description</Text>
+        <Text style={styles.title}>Donor darah lebih mudah dengan Bloodee App</Text>
 
         </View>
         </View>
         <View style={styles.slide}>
         <View style={styles.header}>
+        <View style={styles.container}>
         <Image
-            source={require('../../asset/bloodee1.png')}
+            source={require('../../asset/aset1.png')}
             style={styles.image}
-            resizeMode={"stretch"}
         />
         </View>
+        </View>
         <View style={styles.footer}>
-        <Text style={styles.title}>*Insert Description</Text>
+        <Text style={styles.title}>Setetes darah, sejuta kehidupan</Text>
 
         </View>
         </View>
         <View style={styles.slide}>
         <View style={styles.header}>
+        <View style={styles.container}>
         <Image
             source={require('../../asset/bloodee1.png')}
             style={styles.image2}
-            resizeMode={"stretch"}
-        />
+        />   
         </View>
+        </View>
+
         <View style={styles.footer2}>
+            <Text style={{fontSize:25, fontWeight:'bold', color:'#8a0303'}}>Ayo mulai dengan Bloodee</Text>
         <View style={{flexDirection:"column"}}>
             <TouchableOpacity
             onPress={()=>this.props.navigation.navigate("SignUpScreen")}
@@ -70,20 +76,27 @@ export default class SwiperComponent extends React.Component{
             </TouchableOpacity>
 
         </View>
-            
-        </View>
+        </View>   
         </View>
     </Swiper>
     )
     }
 }
 const {width, height} = Dimensions.get('screen');
-const height_image = height*0.5 *0.8;
+const height_image = height*0.48 *0.78;
 const width_image = height_image *1.1;
 const height_image2 = height*0.5 *0.7;
 const width_image2 = height_image *0.9;
 const width_button = width * 0.5;
 var styles = StyleSheet.create({
+    container:{
+        borderRadius:150,
+        backgroundColor:'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation:5,
+        padding:10
+        },
     slide:{
     flex:1,
     backgroundColor:'white'
@@ -103,12 +116,14 @@ var styles = StyleSheet.create({
     alignItems:'center',
     },
     image: {
+    borderRadius:200,
+    borderWidth:1,
     height: height_image,
     width: width_image
     },
     image2: {
-    height: height_image2,
-    width: width_image2
+    height: height_image,
+    width: width_image
     },
     title: {
     fontSize:25,
