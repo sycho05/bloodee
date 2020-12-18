@@ -1,25 +1,30 @@
-import React, {useState, useEffect} from 'react';
+//Import Library
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  Image,
   Dimensions,
   TouchableOpacity,
   FlatList,
+  Image,
   ActivityIndicator,
 } from 'react-native';
+import {AuthContext} from '../../../auth/AuthProvider';
 import database from '@react-native-firebase/database';
 
-const InfoComponent = () => {
+const HistoryComponent = () => {
+  //Deklarasi variable yang digunakan
+  const {user} = useContext(AuthContext);
   const [selectedId, setSelectedId] = useState(null);
-  const [dataPermintaan, setDataPermintaan] = useState([]);
+  const [dataHistory, setDataHistory] = useState([]);
   const [load, setLoad] = useState(false);
 
+  //Mengambil data history donor darah user pada firebase ketika user mengakses menu History
   useEffect(() => {
     try {
       const onValueChange = database()
-        .ref(`/PermintaanDarahAccepted/`)
+        .ref(`/History/${user.uid}`)
         .on('value', (snapshot) => {
           const dataTemp = [];
           snapshot.forEach((item) => {
@@ -27,22 +32,17 @@ const InfoComponent = () => {
               data: {
                 id: item.key,
                 Id: item.val().Id,
-                NamaPeminta: item.val().NamaPeminta,
-                NamaPenerima: item.val().NamaPenerima,
-                GolonganDarah: item.val().GolonganDarah,
-                JumlahDarah: item.val().JumlahDarah,
-                KeteranganLain: item.val().KeteranganLain,
-                NoHandphone: item.val().NoHandphone,
-                Alamat: item.val().Alamat,
+                Tanggal: item.val().Tanggal,
+                Lokasi: item.val().Lokasi,
               },
             });
             return false;
           });
-          setDataPermintaan(dataTemp);
+          setDataHistory(dataTemp);
           setLoad(true);
         });
       return () =>
-        database().ref(`/PermintaanDarahAccepted/`).off('value', onValueChange);
+        database().ref(`/History/${user.uid}`).off('value', onValueChange);
     } catch (e) {
       console.log(e);
     }
@@ -50,22 +50,8 @@ const InfoComponent = () => {
 
   const Item = ({item, onPress, style}) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-      <Text style={styles.deskripsi}>
-        Peminta Darah :{item.data.NamaPeminta}
-      </Text>
-      <Text style={styles.deskripsi}>
-        Penerima Darah :{item.data.NamaPenerima}
-      </Text>
-      <Text style={styles.deskripsi}>
-        Golongan Darah Dibutuhkan :{item.data.GolonganDarah}
-      </Text>
-      <Text style={styles.deskripsi}>
-        Kantong Darah Dibutuhkan :{item.data.JumlahDarah}
-      </Text>
-      <Text style={styles.deskripsi}>
-        Keterangan Lain : {item.data.KeteranganLain}
-      </Text>
-      <Text style={styles.deskripsi}>Alamat:{item.data.Alamat}</Text>
+      <Text style={styles.deskripsi}>Tanggal Donor :{item.data.Tanggal}</Text>
+      <Text style={styles.deskripsi}>Lokasi :{item.data.Lokasi}</Text>
     </TouchableOpacity>
   );
 
@@ -81,13 +67,15 @@ const InfoComponent = () => {
     );
   };
 
+  //Pengecekan Render telah selesai dilakukan
+  //Apabila Render telah selesai maka load bernilai true dan akan menampilkan tampilan utama
   return load ? (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          style={{width: 300, height: 200}}
+          style={{width: 250, height: 250}}
           resizeMode={'contain'}
-          source={require('../../../asset/infoterkini2.png')}
+          source={require('../../../asset/history.png')}
         />
       </View>
       <View
@@ -109,16 +97,17 @@ const InfoComponent = () => {
             elevation: 2,
             margin: 3,
           }}>
-          Info Terkini Seputar Donor Darah
+          History Donor Darah
         </Text>
         <FlatList
-          data={dataPermintaan}
+          data={dataHistory}
           renderItem={renderItem}
           keyExtractor={(item) => item.data.id}
         />
       </View>
     </View>
   ) : (
+    //Apabila Render belum selesai maka load bernilai false, dan akan menampilkan tampilan loader
     <View
       style={{
         flex: 1,
@@ -131,7 +120,7 @@ const InfoComponent = () => {
   );
 };
 
-export default InfoComponent;
+export default HistoryComponent;
 
 const width = Dimensions.get('screen').width;
 const styles = StyleSheet.create({
@@ -154,5 +143,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  imageBackground: {
+    width: width * 0.5,
+    height: width * 0.5,
+    alignItems: 'center',
   },
 });
