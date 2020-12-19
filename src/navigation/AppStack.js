@@ -17,6 +17,7 @@ import MyVoucherComponent from '../screen/AppStack/Home/MyVoucherComponent';
 import LocationComponent from '../screen/AppStack/Home/LocationComponent';
 import HistoryComponent from '../screen/AppStack/Home/HistoryComponent';
 import StatusPermintaan from '../screen/AppStack/Home/StatusPermintaan';
+import RiwayatPermintaan from '../screen/AppStack/Home/RiwayatPermintaan';
 import StatusPermintaanACC from '../screen/AppStack/Home/StatusPermintaanACC';
 import StatusPermintaanRJC from '../screen/AppStack/Home/StatusPermintaanRJC';
 import StatusPermintaanWait from '../screen/AppStack/Home/StatusPermintaanWait';
@@ -50,6 +51,11 @@ const HomeStackScreen = () => (
     <HomeStack.Screen
       name="StatusPermintaan"
       component={StatusPermintaan}
+      options={{title: '', headerShown: true}}
+    />
+    <HomeStack.Screen
+      name="RiwayatPermintaan"
+      component={RiwayatPermintaan}
       options={{title: '', headerShown: true}}
     />
     <HomeStack.Screen

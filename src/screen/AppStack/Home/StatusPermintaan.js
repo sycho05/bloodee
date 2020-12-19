@@ -10,59 +10,30 @@ const StatusPermintaan = ({navigation}) => {
         style={{
           justifyContent: 'center',
           alignContent: 'center',
-          backgroundColor: '#fff',
-          elevation: 5,
+          backgroundColor: '#8a0303',
           borderRadius: 25,
           marginHorizontal: 50,
           padding: 15,
         }}>
-        <Text style={{textAlign: 'center'}}>
+        <Text style={{textAlign: 'center', color:'#fff'}}>
           Buat Permohonan Permintaan Darah
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('StatusPermintaanWait')}
+        onPress={() => navigation.navigate('RiwayatPermintaan')}
         style={{
           justifyContent: 'center',
           alignContent: 'center',
-          backgroundColor: '#fff',
-          elevation: 5,
+          borderColor:'#8a0303',
+          borderWidth:1,
           borderRadius: 25,
           marginHorizontal: 50,
           padding: 15,
           marginVertical: 20,
         }}>
-        <Text style={{textAlign: 'center'}}>Permohonan Permintaan Waiting</Text>
+        <Text style={{textAlign: 'center', color:'#8a0303'}}>Riwayat Permohonan Permintaan</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('StatusPermintaanACC')}
-        style={{
-          justifyContent: 'center',
-          alignContent: 'center',
-          backgroundColor: '#fff',
-          elevation: 5,
-          borderRadius: 25,
-          marginHorizontal: 50,
-          marginBottom: 20,
-          padding: 15,
-        }}>
-        <Text style={{textAlign: 'center'}}>
-          Permohonan Permintaan Ditsetujui
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('StatusPermintaanRJC')}
-        style={{
-          justifyContent: 'center',
-          alignContent: 'center',
-          backgroundColor: '#fff',
-          elevation: 5,
-          borderRadius: 25,
-          marginHorizontal: 50,
-          padding: 15,
-        }}>
-        <Text style={{textAlign: 'center'}}>Permohonan Permintaan Ditolak</Text>
-      </TouchableOpacity>
+
     </View>
   );
 };

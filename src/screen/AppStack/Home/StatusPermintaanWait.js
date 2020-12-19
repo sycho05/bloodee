@@ -40,9 +40,9 @@ const StatusPermintaan = () => {
             return false;
           });
           setStatusPermintaan(dataTemp);
+          setLoad(true);
         });
 
-      setLoad(true);
       return () => {
         database()
           .ref(`/PermintaanDarah/${user.uid}`)
@@ -93,16 +93,22 @@ const StatusPermintaan = () => {
     <View style={styles.container}>
       <View
         style={{
-          flexDirection: 'row',
+          flexDirection: 'column',
           backgroundColor: '#fff',
           justifyContent: 'center',
           alignContent: 'center',
-          elevation: 4,
+          borderWidth:1,
+          borderColor:'#8a0303',
           borderRadius: 10,
+          elevation:5,
           padding: 5,
+          marginHorizontal:16,
         }}>
-        <Text style={{textAlign: 'center'}}>
-          Data Permohonan Permintaan Darah
+        <Text style={{textAlign: 'center', color:'#8a0303'}}>
+          Permohonan Permintaan Darah
+        </Text>
+        <Text style={{textAlign: 'center', color:'#8a0303'}}>
+          (Menunggu)
         </Text>
       </View>
       <View style={{flex: 1}}>
