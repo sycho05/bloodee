@@ -1,3 +1,4 @@
+//Import Library
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -12,6 +13,7 @@ import MapView, {PROVIDER_GOOGLE, Marker, Callout} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import {getDistance} from 'geolib';
 
+//Deklarasi variable
 const LocationComponent = () => {
   const [datajarak, setJarak] = useState({
     jarakITTP: null,
@@ -118,6 +120,7 @@ const LocationComponent = () => {
     );
   };
 
+  //Mengambil posisi user, dan mengkalkulasi jarak dengan tiap marker
   const GetPosition = () => {
     Geolocation.getCurrentPosition((position) => {
       const {longitude, latitude} = position.coords;
@@ -158,11 +161,13 @@ const LocationComponent = () => {
     });
   };
 
+  //Memanggil fungsi getPosition ketika user mengakses lokasi donor
   useEffect(() => {
     GetPosition();
     setLoad(true);
   }, []);
-
+  //Pengecekan Render telah selesai dilakukan
+  //Apabila Render telah selesai maka load bernilai true dan akan menampilkan tampilan utama
   return load ? (
     <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
       <View style={{flex: 2}}>
@@ -322,6 +327,7 @@ const LocationComponent = () => {
       </View>
     </View>
   ) : (
+    //Apabila Render belum selesai maka load bernilai false, dan akan menampilkan tampilan loader
     <View
       style={{
         flex: 1,

@@ -1,3 +1,4 @@
+//Import Library
 import React, {useContext, useState} from 'react';
 import {
   View,
@@ -10,11 +11,12 @@ import {
 import {AuthContext} from '../../auth/AuthProvider';
 
 const LoginComponent = ({navigation}) => {
+  //Deklarasi variabl
   const {login} = useContext(AuthContext);
-
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
+  //Pengecekan input sebelum menjalankan fungsi selanjutnya
   const userLogin = () => {
     if (email && password) {
       login(email, password);

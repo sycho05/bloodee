@@ -1,3 +1,4 @@
+//Import Library
 import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {ToastAndroid} from 'react-native';
@@ -11,6 +12,7 @@ export const AuthProvider = ({children}) => {
       value={{
         user,
         setUser,
+        //Fungsi Login
         login: async (email, password) => {
           try {
             await auth()
@@ -40,6 +42,7 @@ export const AuthProvider = ({children}) => {
             }
           }
         },
+        //Fungsi SignUp
         register: async (email, password) => {
           try {
             await auth()
@@ -57,6 +60,7 @@ export const AuthProvider = ({children}) => {
             console.log(e);
           }
         },
+        //Fungsi LogOut
         logout: async () => {
           try {
             await auth()

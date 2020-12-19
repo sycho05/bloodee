@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Image,
-  Dimensions,
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
@@ -12,10 +11,12 @@ import {
 import database from '@react-native-firebase/database';
 
 const InfoComponent = () => {
+  //Deklarasi variable
   const [selectedId, setSelectedId] = useState(null);
   const [dataPermintaan, setDataPermintaan] = useState([]);
   const [load, setLoad] = useState(false);
 
+  //Cek data permintaan kedalam firebase ketika pengguna mengakses info permintaan
   useEffect(() => {
     try {
       const onValueChange = database()
@@ -80,7 +81,8 @@ const InfoComponent = () => {
       />
     );
   };
-
+  //Pengecekan Render telah selesai dilakukan
+  //Apabila Render telah selesai maka load bernilai true dan akan menampilkan tampilan utama
   return load ? (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -119,6 +121,7 @@ const InfoComponent = () => {
       </View>
     </View>
   ) : (
+    //Apabila Render belum selesai maka load bernilai false, dan akan menampilkan tampilan loader
     <View
       style={{
         flex: 1,
@@ -133,7 +136,6 @@ const InfoComponent = () => {
 
 export default InfoComponent;
 
-const width = Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   item: {
     padding: 10,

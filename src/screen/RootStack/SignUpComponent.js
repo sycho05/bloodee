@@ -1,3 +1,4 @@
+//Import Library
 import React, {useContext, useState} from 'react';
 import {
   View,
@@ -11,11 +12,12 @@ import {TextInput} from 'react-native-gesture-handler';
 import {AuthContext} from '../../auth/AuthProvider';
 
 const SignUpComponent = ({navigation}) => {
+  //Deklarasi vriable
   const {register} = useContext(AuthContext);
-
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
+  //Pengecekan input sebelum menjalankan fungsi selanjutnya
   const userSignUp = () => {
     if (email && password) {
       if (password.length < 8) {

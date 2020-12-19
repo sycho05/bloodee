@@ -1,3 +1,4 @@
+//Import Library
 import React, {useContext, useState, useEffect} from 'react';
 import {
   View,
@@ -13,6 +14,7 @@ import {AuthContext} from '../../../auth/AuthProvider';
 import database from '@react-native-firebase/database';
 
 const ProfileComponent = ({navigation}) => {
+  //Deklarasi variable
   const {user, logout} = useContext(AuthContext);
   const [load, setLoad] = useState(false);
 
@@ -28,6 +30,7 @@ const ProfileComponent = ({navigation}) => {
     NoHandphone: null,
   });
 
+  //Mengambil data user kedalam database ketika user mengakses menu profil
   useEffect(() => {
     try {
       const onValueChange = database()
@@ -43,7 +46,8 @@ const ProfileComponent = ({navigation}) => {
       console.log(e);
     }
   }, []);
-
+  //Pengecekan Render telah selesai dilakukan
+  //Apabila Render telah selesai maka load bernilai true dan akan menampilkan tampilan utama
   return load ? (
     <View style={styles.container}>
       <ScrollView>
@@ -240,6 +244,7 @@ const ProfileComponent = ({navigation}) => {
       </ScrollView>
     </View>
   ) : (
+    //Apabila Render belum selesai maka load bernilai false, dan akan menampilkan tampilan loader
     <View
       style={{
         flex: 1,

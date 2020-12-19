@@ -25,6 +25,7 @@ const PermintaanComponent = ({navigation}) => {
   const [alamat, setAlamat] = useState();
   const [load, setLoad] = useState();
 
+  //Fungsi post data kedalam database
   const Post = () => {
     try {
       console.log('REF :', permintaan);
@@ -48,6 +49,7 @@ const PermintaanComponent = ({navigation}) => {
     }
   };
 
+  //Fungsi menyimpan key counter kedalam firebase
   const storeData = () => {
     try {
       database().ref(`/counter/users/${user.uid}/key-permintaan`).update({
@@ -59,6 +61,7 @@ const PermintaanComponent = ({navigation}) => {
     }
   };
 
+  //Melakukan get key counter ketika user mengakses menu buat permintaan
   useEffect(() => {
     try {
       const onValueChange = database()
@@ -84,6 +87,7 @@ const PermintaanComponent = ({navigation}) => {
     }
   }, []);
 
+  //Pengecekan seluruh input terisi sebelum menjalankan fungsi selanjutnya
   const submitPermintaan = () => {
     if (
       namaPeminta &&
@@ -102,7 +106,8 @@ const PermintaanComponent = ({navigation}) => {
       ToastAndroid.show('Mohon Isi Seluruh Input !', ToastAndroid.SHORT);
     }
   };
-
+  //Pengecekan Render telah selesai dilakukan
+  //Apabila Render telah selesai maka load bernilai true dan akan menampilkan tampilan utama
   return load ? (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -180,6 +185,7 @@ const PermintaanComponent = ({navigation}) => {
       </ScrollView>
     </View>
   ) : (
+    //Apabila Render belum selesai maka load bernilai false, dan akan menampilkan tampilan loader
     <View
       style={{
         flex: 1,
@@ -194,9 +200,6 @@ const PermintaanComponent = ({navigation}) => {
 
 export default PermintaanComponent;
 
-const {width, height} = Dimensions.get('screen');
-const width_button = width * 0.45;
-const width_button2 = width * 0.95;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

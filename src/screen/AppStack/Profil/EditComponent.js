@@ -1,3 +1,4 @@
+//Import Library
 import React, {useContext, useState, useEffect} from 'react';
 import {
   View,
@@ -15,6 +16,7 @@ import {AuthContext} from '../../../auth/AuthProvider';
 import database from '@react-native-firebase/database';
 
 const EditComponent = ({navigation}) => {
+  //Deklarasi variable
   const {user} = useContext(AuthContext);
   const [dataKTP, setDataKTP] = useState();
   const [dataNama, setDataNama] = useState();
@@ -26,6 +28,7 @@ const EditComponent = ({navigation}) => {
   const [dataNoHandphone, setDataNoHandphone] = useState();
   const [load, setLoad] = useState();
 
+  //Fungsi post data kedalam database
   const Post = () => {
     database()
       .ref(`/users/${user.uid}`)
@@ -45,6 +48,7 @@ const EditComponent = ({navigation}) => {
       });
   };
 
+  //Mengambil data user kedalam database ketika user mengakses menu edit profil
   useEffect(() => {
     try {
       const onValueChange = database()
@@ -67,7 +71,8 @@ const EditComponent = ({navigation}) => {
       console.log(e);
     }
   }, []);
-
+  //Pengecekan Render telah selesai dilakukan
+  //Apabila Render telah selesai maka load bernilai true dan akan menampilkan tampilan utama
   return load ? (
     <View style={styles.container}>
       <View
@@ -181,6 +186,7 @@ const EditComponent = ({navigation}) => {
       </View>
     </View>
   ) : (
+    //Apabila Render belum selesai maka load bernilai false, dan akan menampilkan tampilan loader
     <View
       style={{
         flex: 1,
