@@ -24,18 +24,22 @@ const InfoComponent = () => {
         .on('value', (snapshot) => {
           const dataTemp = [];
           snapshot.forEach((item) => {
-            dataTemp.push({
-              data: {
-                id: item.key,
-                Id: item.val().Id,
-                NamaPeminta: item.val().NamaPeminta,
-                NamaPenerima: item.val().NamaPenerima,
-                GolonganDarah: item.val().GolonganDarah,
-                JumlahDarah: item.val().JumlahDarah,
-                KeteranganLain: item.val().KeteranganLain,
-                NoHandphone: item.val().NoHandphone,
-                Alamat: item.val().Alamat,
-              },
+            item.forEach((item2) => {
+              dataTemp.push({
+                data: {
+                  IdItem: `${item2.val().Id}-${item2.key}`,
+                  IdUser: item2.val().Id,
+                  IdBranch: item2.key,
+                  NamaPeminta: item2.val().NamaPeminta,
+                  NamaPenerima: item2.val().NamaPenerima,
+                  GolonganDarah: item2.val().GolonganDarah,
+                  JumlahDarah: item2.val().JumlahDarah,
+                  KeteranganLain: item2.val().KeteranganLain,
+                  NoHandphone: item2.val().NoHandphone,
+                  Alamat: item2.val().Alamat,
+                },
+              });
+              return false;
             });
             return false;
           });
@@ -71,12 +75,12 @@ const InfoComponent = () => {
   );
 
   const renderItem = ({item}) => {
-    const backgroundColor = item.data.id === selectedId ? '#f2f2f2' : '#fff';
+    const backgroundColor = item === selectedId ? '#f2f2f2' : '#fff';
 
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.data.id)}
+        onPress={() => setSelectedId(item.data.IdItem)}
         style={{backgroundColor}}
       />
     );
@@ -116,7 +120,7 @@ const InfoComponent = () => {
         <FlatList
           data={dataPermintaan}
           renderItem={renderItem}
-          keyExtractor={(item) => item.data.id}
+          keyExtractor={(item) => item.data.IdItem}
         />
       </View>
     </View>

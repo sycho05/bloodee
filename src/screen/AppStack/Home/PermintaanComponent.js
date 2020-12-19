@@ -30,7 +30,7 @@ const PermintaanComponent = ({navigation}) => {
     try {
       console.log('REF :', permintaan);
       database()
-        .ref(`PermintaanDarah/Permintaan_${user.uid}_${permintaan}`)
+        .ref(`PermintaanDarah/${user.uid}/PermintaanKe-${permintaan}`)
         .update({
           Id: user.uid,
           NamaPeminta: namaPeminta,
@@ -101,7 +101,10 @@ const PermintaanComponent = ({navigation}) => {
       Post();
       setPermintaan(permintaan + 1);
       storeData();
-      navigation.navigate('Submit');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Submit'}],
+      });
     } else {
       ToastAndroid.show('Mohon Isi Seluruh Input !', ToastAndroid.SHORT);
     }

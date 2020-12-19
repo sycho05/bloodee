@@ -16,6 +16,10 @@ import Voucher1Component from '../screen/AppStack/Home/Voucher1Component';
 import MyVoucherComponent from '../screen/AppStack/Home/MyVoucherComponent';
 import LocationComponent from '../screen/AppStack/Home/LocationComponent';
 import HistoryComponent from '../screen/AppStack/Home/HistoryComponent';
+import StatusPermintaan from '../screen/AppStack/Home/StatusPermintaan';
+import StatusPermintaanACC from '../screen/AppStack/Home/StatusPermintaanACC';
+import StatusPermintaanRJC from '../screen/AppStack/Home/StatusPermintaanRJC';
+import StatusPermintaanWait from '../screen/AppStack/Home/StatusPermintaanWait';
 import ProfileComponent from '../screen/AppStack/Profil/ProfileComponent';
 import EditComponent from '../screen/AppStack/Profil/EditComponent';
 import QrComponent from '../screen/AppStack/DonorSekarang/QrComponent';
@@ -42,6 +46,26 @@ const HomeStackScreen = () => (
       name="Home"
       component={HomeComponent}
       options={{headerShown: false}}
+    />
+    <HomeStack.Screen
+      name="StatusPermintaan"
+      component={StatusPermintaan}
+      options={{title: '', headerShown: true}}
+    />
+    <HomeStack.Screen
+      name="StatusPermintaanACC"
+      component={StatusPermintaanACC}
+      options={{title: '', headerShown: true}}
+    />
+    <HomeStack.Screen
+      name="StatusPermintaanRJC"
+      component={StatusPermintaanRJC}
+      options={{title: '', headerShown: true}}
+    />
+    <HomeStack.Screen
+      name="StatusPermintaanWait"
+      component={StatusPermintaanWait}
+      options={{title: '', headerShown: true}}
     />
     <HomeStack.Screen
       name="Permintaan"

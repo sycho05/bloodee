@@ -181,7 +181,7 @@ const HomeComponent = ({navigation}) => {
           <View style={styles.footer2}>
             <View style={{flexDirection: 'row', marginTop: 0}}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Permintaan')}
+                onPress={() => navigation.navigate('StatusPermintaan')}
                 style={[
                   styles.button,
                   {
