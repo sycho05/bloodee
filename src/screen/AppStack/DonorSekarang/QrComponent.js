@@ -43,7 +43,6 @@ const QrScreen = ({navigation}) => {
           console.log('User data: ', datadb.val());
           setLoad(true);
           if (
-            datadb.val().NoKTP === '' ||
             datadb.val().Nama === '' ||
             datadb.val().TempatLahir === '' ||
             datadb.val().TanggalLahir === '' ||

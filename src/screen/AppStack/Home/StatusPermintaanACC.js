@@ -103,6 +103,7 @@ const StatusPermintaanACC = () => {
           elevation:5,
           padding: 5,
           marginHorizontal:16,
+          marginTop:10,
         }}>
         <Text style={{textAlign: 'center', color:'#8a0303'}}>
           Permohonan Permintaan Darah

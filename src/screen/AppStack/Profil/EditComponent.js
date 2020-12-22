@@ -18,7 +18,6 @@ import database from '@react-native-firebase/database';
 const EditComponent = ({navigation}) => {
   //Deklarasi variable
   const {user} = useContext(AuthContext);
-  const [dataKTP, setDataKTP] = useState();
   const [dataNama, setDataNama] = useState();
   const [dataTempatLahir, setDataTempatLahir] = useState();
   const [dataTanggalLahir, setDataTanggalLahir] = useState();
@@ -34,7 +33,6 @@ const EditComponent = ({navigation}) => {
       .ref(`/users/${user.uid}`)
       .update({
         Id: user.uid,
-        NoKTP: dataKTP,
         Nama: dataNama,
         TempatLahir: dataTempatLahir,
         TanggalLahir: dataTanggalLahir,
@@ -54,7 +52,6 @@ const EditComponent = ({navigation}) => {
       const onValueChange = database()
         .ref(`/users/${user.uid}`)
         .on('value', (snapshot) => {
-          setDataKTP(snapshot.val().NoKTP);
           setDataNama(snapshot.val().Nama);
           setDataTempatLahir(snapshot.val().TempatLahir);
           setDataTanggalLahir(snapshot.val().TanggalLahir);
@@ -79,14 +76,6 @@ const EditComponent = ({navigation}) => {
         style={{margin: 25, justifyContent: 'center', alignContent: 'center'}}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.title}>Edit Profil</Text>
-          <Text style={{alignItems: 'center', marginTop: 5}}>No. KTP</Text>
-          <View style={styles.section}>
-            <TextInput
-              placeholder="Masukan Nomor KTP Anda"
-              style={styles.textInput}
-              onChangeText={(input) => setDataKTP(input)}
-              value={dataKTP}></TextInput>
-          </View>
           <Text style={{alignItems: 'center', marginTop: 10}}>Nama</Text>
           <View style={styles.section}>
             <TextInput

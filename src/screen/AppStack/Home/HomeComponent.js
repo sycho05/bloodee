@@ -21,7 +21,6 @@ const HomeComponent = ({navigation}) => {
   const [load, setLoad] = useState(false);
   const [dataUser, setDataUser] = useState({
     Id: null,
-    NoKTP: null,
     Nama: null,
     TempatLahir: null,
     TanggalLahir: null,
@@ -53,7 +52,6 @@ const HomeComponent = ({navigation}) => {
           if (datadb.val() === null) {
             database().ref(`/users/${user.uid}`).set({
               Id: user.uid,
-              NoKTP: '',
               Nama: '',
               TempatLahir: '',
               TanggalLahir: '',
@@ -74,7 +72,6 @@ const HomeComponent = ({navigation}) => {
             setLoad(true);
 
             if (
-              datadb.val().NoKTP === '' ||
               datadb.val().Nama === '' ||
               datadb.val().TempatLahir === '' ||
               datadb.val().TanggalLahir === '' ||
@@ -162,9 +159,6 @@ const HomeComponent = ({navigation}) => {
                       }}
                       numberOfLines={1}>
                       No. ID : {dataUser.Id}
-                    </Text>
-                    <Text numberOfLines={1} style={{width: 200}}>
-                      No KTP :{dataUser.NoKTP}
                     </Text>
                     <Text>Nama : {dataUser.Nama}</Text>
                     <Text>Jenis Kelamin : {dataUser.JenisKelamin}</Text>

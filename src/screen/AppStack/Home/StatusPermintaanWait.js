@@ -92,17 +92,18 @@ const StatusPermintaan = () => {
   return load ? (
     <View style={styles.container}>
       <View
-        style={{
-          flexDirection: 'column',
-          backgroundColor: '#fff',
-          justifyContent: 'center',
-          alignContent: 'center',
-          borderWidth:1,
-          borderColor:'#8a0303',
-          borderRadius: 10,
-          elevation:5,
-          padding: 5,
-          marginHorizontal:16,
+       style={{
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignContent: 'center',
+        borderWidth:1,
+        borderColor:'#8a0303',
+        borderRadius: 10,
+        elevation:5,
+        padding: 5,
+        marginHorizontal:16,
+        marginTop:10,
         }}>
         <Text style={{textAlign: 'center', color:'#8a0303'}}>
           Permohonan Permintaan Darah
