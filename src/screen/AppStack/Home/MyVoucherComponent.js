@@ -48,18 +48,8 @@ const MyVoucherComponent = () => {
                 marginTop: 20,
               }}>
               <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                Vocuher Belanja Lajadut
+                Coming Soon
               </Text>
-              <Text></Text>
-              <Text style={{textAlign: 'center'}}>
-                Tukarkan voucher belanja lajadut sebesar Rp.10.000 dengan syarat
-                pembelian sebesar Rp.2.000.000.{' '}
-              </Text>
-              <Text style={{fontWeight: 'bold'}}>
-                Kode Voucher: ABCDEFGHIJKLMN
-              </Text>
-              <Text></Text>
-              <Text>Batas Penukaran Voucher: 29 February 2021 </Text>
             </View>
           </View>
         </ScrollView>

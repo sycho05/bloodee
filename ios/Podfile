@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'blodeeproject' do
+target 'bloodeeapp' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
@@ -23,10 +23,10 @@ target 'blodeeproject' do
   end
 end
 
-target 'blodeeproject-tvOS' do
-  # Pods for blodeeproject-tvOS
+target 'bloodeeapp-tvOS' do
+  # Pods for bloodeeapp-tvOS
 
-  target 'blodeeproject-tvOSTests' do
+  target 'bloodeeapp-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

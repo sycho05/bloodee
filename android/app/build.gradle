@@ -131,7 +131,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.blodeeproject"
+        applicationId "com.bloodeeapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

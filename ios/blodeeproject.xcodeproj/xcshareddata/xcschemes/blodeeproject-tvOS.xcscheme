@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "blodeeproject-tvOS.app"
-               BlueprintName = "blodeeproject-tvOS"
-               ReferencedContainer = "container:blodeeproject.xcodeproj">
+               BuildableName = "bloodeeapp-tvOS.app"
+               BlueprintName = "bloodeeapp-tvOS"
+               ReferencedContainer = "container:bloodeeapp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "blodeeproject-tvOSTests.xctest"
-               BlueprintName = "blodeeproject-tvOSTests"
-               ReferencedContainer = "container:blodeeproject.xcodeproj">
+               BuildableName = "bloodeeapp-tvOSTests.xctest"
+               BlueprintName = "bloodeeapp-tvOSTests"
+               ReferencedContainer = "container:bloodeeapp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "blodeeproject-tvOS.app"
-            BlueprintName = "blodeeproject-tvOS"
-            ReferencedContainer = "container:blodeeproject.xcodeproj">
+            BuildableName = "bloodeeapp-tvOS.app"
+            BlueprintName = "bloodeeapp-tvOS"
+            ReferencedContainer = "container:bloodeeapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "blodeeproject-tvOS.app"
-            BlueprintName = "blodeeproject-tvOS"
-            ReferencedContainer = "container:blodeeproject.xcodeproj">
+            BuildableName = "bloodeeapp-tvOS.app"
+            BlueprintName = "bloodeeapp-tvOS"
+            ReferencedContainer = "container:bloodeeapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
